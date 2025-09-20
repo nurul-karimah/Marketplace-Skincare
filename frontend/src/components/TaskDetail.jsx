@@ -1,69 +1,201 @@
-import { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import { Card, Button, Spinner, Alert } from 'react-bootstrap';
+import '../assets/css/bootstrap.css';
+import '../assets/css/style.css';
+import '../assets/css/responsive.css';
 
-export default function TaskDetail() {
-  const { id } = useParams();
-  const [task, setTask] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
-  const navigate = useNavigate();
+import 'bootstrap/dist/css/bootstrap.min.css';
+import '@fortawesome/fontawesome-free/css/all.min.css';
 
-  useEffect(() => {
-    fetchTask();
-  }, [id]);
-
-  const fetchTask = async () => {
-    try {
-      const res = await axios.get(`http://localhost:5000/tasks/${id}`);
-      setTask(res.data);
-    } catch (err) {
-      setError(err.response?.data?.message || 'Failed to fetch task');
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  if (loading)
-    return (
-      <div className="text-center mt-5">
-        <Spinner animation="border" />
-        <p>Loading task...</p>
-      </div>
-    );
-
-  if (error) return <Alert variant="danger">{error}</Alert>;
-
-  if (!task) return <Alert variant="warning">Task not found</Alert>;
-
+export default function Home() {
   return (
-    <div className="container mt-4">
-      <Card>
-        <Card.Header>
-          <h4>📌 Task Detail</h4>
-        </Card.Header>
-        <Card.Body>
-          <h5>{task.title}</h5>
-          <p>
-            <strong>Description:</strong> {task.description || '-'}
-          </p>
-          <p>
-            <strong>Status:</strong> <span className={`badge ${task.status === 'completed' ? 'bg-success' : task.status === 'pending' ? 'bg-warning text-dark' : 'bg-secondary'}`}>{task.status}</span>
-          </p>
-          <p>
-            <strong>Due Date:</strong> {task.due_date ? new Date(task.due_date).toLocaleDateString() : '-'}
-          </p>
-        </Card.Body>
-        <Card.Footer className="d-flex justify-content-between">
-          <Button variant="secondary" onClick={() => navigate(-1)}>
-            ⬅ Back
-          </Button>
-          <Button variant="warning" onClick={() => navigate(`/update-task/${task.id}`)}>
-            ✏ Edit
-          </Button>
-        </Card.Footer>
-      </Card>
+    <div className="hero_area">
+      <div className="bg-box">
+        <img src="images/hero-bg.jpg" alt="" />
+      </div>
+
+      <header className="header_section">
+        <div className="container">
+          <nav className="navbar navbar-expand-lg custom_nav-container">
+            <a className="navbar-brand" href="index.html">
+              <span> Feane </span>
+            </a>
+
+            <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span className=""> </span>
+            </button>
+
+            <div className="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul className="navbar-nav mx-auto">
+                <li className="nav-item active">
+                  <a className="nav-link" href="index.html">
+                    Home <span className="sr-only">(current)</span>
+                  </a>
+                </li>
+                <li className="nav-item">
+                  <a className="nav-link" href="menu.html">
+                    Menu
+                  </a>
+                </li>
+                <li className="nav-item">
+                  <a className="nav-link" href="about.html">
+                    About
+                  </a>
+                </li>
+                <li className="nav-item">
+                  <a className="nav-link" href="book.html">
+                    Book Table
+                  </a>
+                </li>
+              </ul>
+              <div className="user_option">
+                <a href="" className="user_link">
+                  <i className="fa fa-user" aria-hidden="true"></i>
+                </a>
+                <a className="cart_link" href="#">
+                  <svg
+                    version="1.1"
+                    id="Capa_1"
+                    xmlns="http://www.w3.org/2000/svg"
+                    xmlns:xlink="http://www.w3.org/1999/xlink"
+                    x="0px"
+                    y="0px"
+                    viewBox="0 0 456.029 456.029"
+                    style="enable-background: new 0 0 456.029 456.029"
+                    xml:space="preserve"
+                  >
+                    <g>
+                      <g>
+                        <path
+                          d="M345.6,338.862c-29.184,0-53.248,23.552-53.248,53.248c0,29.184,23.552,53.248,53.248,53.248
+                   c29.184,0,53.248-23.552,53.248-53.248C398.336,362.926,374.784,338.862,345.6,338.862z"
+                        />
+                      </g>
+                    </g>
+                    <g>
+                      <g>
+                        <path
+                          d="M439.296,84.91c-1.024,0-2.56-0.512-4.096-0.512H112.64l-5.12-34.304C104.448,27.566,84.992,10.67,61.952,10.67H20.48
+                   C9.216,10.67,0,19.886,0,31.15c0,11.264,9.216,20.48,20.48,20.48h41.472c2.56,0,4.608,2.048,5.12,4.608l31.744,216.064
+                   c4.096,27.136,27.648,47.616,55.296,47.616h212.992c26.624,0,49.664-18.944,55.296-45.056l33.28-166.4
+                   C457.728,97.71,450.56,86.958,439.296,84.91z"
+                        />
+                      </g>
+                    </g>
+                    <g>
+                      <g>
+                        <path
+                          d="M215.04,389.55c-1.024-28.16-24.576-50.688-52.736-50.688c-29.696,1.536-52.224,26.112-51.2,55.296
+                   c1.024,28.16,24.064,50.688,52.224,50.688h1.024C193.536,443.31,216.576,418.734,215.04,389.55z"
+                        />
+                      </g>
+                    </g>
+                    <g></g>
+                    <g></g>
+                    <g></g>
+                    <g></g>
+                    <g></g>
+                    <g></g>
+                    <g></g>
+                    <g></g>
+                    <g></g>
+                    <g></g>
+                    <g></g>
+                    <g></g>
+                    <g></g>
+                    <g></g>
+                    <g></g>
+                  </svg>
+                </a>
+                <form className="form-inline">
+                  <button className="btn my-2 my-sm-0 nav_search-btn" type="submit">
+                    <i className="fa fa-search" aria-hidden="true"></i>
+                  </button>
+                </form>
+                <a href="" className="order_online">
+                  {' '}
+                  Order Online{' '}
+                </a>
+              </div>
+            </div>
+          </nav>
+        </div>
+      </header>
+
+      <section className="slider_section">
+        <div id="customCarousel1" className="carousel slide" data-ride="carousel">
+          <div className="carousel-inner">
+            <div className="carousel-item active">
+              <div className="container">
+                <div className="row">
+                  <div className="col-md-7 col-lg-6">
+                    <div className="detail-box">
+                      <h1>Fast Food Restaurant</h1>
+                      <p>
+                        Doloremque, itaque aperiam facilis rerum, commodi, temporibus sapiente ad mollitia laborum quam quisquam esse error unde. Tempora ex doloremque, labore, sunt repellat dolore, iste magni quos nihil ducimus libero
+                        ipsam.
+                      </p>
+                      <div className="btn-box">
+                        <a href="" className="btn1">
+                          {' '}
+                          Order Now{' '}
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="carousel-item">
+              <div className="container">
+                <div className="row">
+                  <div className="col-md-7 col-lg-6">
+                    <div className="detail-box">
+                      <h1>Fast Food Restaurant</h1>
+                      <p>
+                        Doloremque, itaque aperiam facilis rerum, commodi, temporibus sapiente ad mollitia laborum quam quisquam esse error unde. Tempora ex doloremque, labore, sunt repellat dolore, iste magni quos nihil ducimus libero
+                        ipsam.
+                      </p>
+                      <div className="btn-box">
+                        <a href="" className="btn1">
+                          {' '}
+                          Order Now{' '}
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="carousel-item">
+              <div className="container">
+                <div className="row">
+                  <div className="col-md-7 col-lg-6">
+                    <div className="detail-box">
+                      <h1>Fast Food Restaurant</h1>
+                      <p>
+                        Doloremque, itaque aperiam facilis rerum, commodi, temporibus sapiente ad mollitia laborum quam quisquam esse error unde. Tempora ex doloremque, labore, sunt repellat dolore, iste magni quos nihil ducimus libero
+                        ipsam.
+                      </p>
+                      <div className="btn-box">
+                        <a href="" className="btn1">
+                          {' '}
+                          Order Now{' '}
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="container">
+            <ol className="carousel-indicators">
+              <li data-target="#customCarousel1" data-slide-to="0" className="active"></li>
+              <li data-target="#customCarousel1" data-slide-to="1"></li>
+              <li data-target="#customCarousel1" data-slide-to="2"></li>
+            </ol>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }
