@@ -22,6 +22,8 @@ import '../assets/css/bootstrap.css'; // kalau kamu memang punya versi custom
 import '../assets/css/style.css';
 import '../assets/css/responsive.css';
 
+import React, { useEffect } from 'react';
+
 import herBg from '../assets/images/hero-bg.jpg';
 import aboutImg from '../assets/images/about-img.png';
 import o1 from '../assets/images/o1.jpg';
@@ -37,6 +39,10 @@ import f8 from '../assets/images/f8.png';
 import f9 from '../assets/images/f9.png';
 import client1 from '../assets/images/client1.jpg';
 import client2 from '../assets/images/client2.jpg';
+
+// Import gambar Anda
+import client1 from './assets/client1.jpg'; // Ganti dengan path gambar yang benar
+import client2 from './assets/client2.jpg'; // Ganti dengan path gambar yang benar
 
 export default function TaskDetail() {
   return (
