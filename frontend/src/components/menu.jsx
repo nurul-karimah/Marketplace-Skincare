@@ -34,19 +34,19 @@ export default function Menu() {
                     </Link>
                   </li>
                   <li className="nav-item active">
-                    <a className="nav-link" href="menu.html" style={{ color: 'white' }}>
+                    <Link className="nav-link" to={'/'} style={{ color: 'white' }}>
                       Menu <span className="sr-only">(current)</span>
-                    </a>
+                    </Link>
                   </li>
                   <li className="nav-item">
-                    <a className="nav-link" href="about.html" style={{ color: 'white' }}>
+                    <Link className="nav-link" to={'/'} style={{ color: 'white' }}>
                       About
-                    </a>
+                    </Link>
                   </li>
                   <li className="nav-item">
-                    <a className="nav-link" href="book.html" style={{ color: 'white' }}>
+                    <Link className="nav-link" to={'/'} style={{ color: 'white' }}>
                       Book Table
-                    </a>
+                    </Link>
                   </li>
                 </ul>
 

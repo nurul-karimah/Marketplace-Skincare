@@ -1,29 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import '@fortawesome/fontawesome-free/css/all.min.css';
-
-// Bootstrap
-import 'bootstrap/dist/css/bootstrap.min.css';
-import 'bootstrap/dist/js/bootstrap.bundle.min.js';
-
-// jQuery
-import $ from 'jquery';
-window.$ = $;
-window.jQuery = $;
-
-// Isotope
-import Isotope from 'isotope-layout';
-
-// Nice Select
-import 'jquery-nice-select/css/nice-select.css';
-import 'jquery-nice-select';
-
-// Custom CSS
-import '../assets/css/bootstrap.css'; // kalau kamu memang punya versi custom
-import '../assets/css/style.css';
-import '../assets/css/responsive.css';
-
-import React, { useEffect } from 'react';
-
 import herBg from '../assets/images/hero-bg.jpg';
 import aboutImg from '../assets/images/about-img.png';
 import o1 from '../assets/images/o1.jpg';
@@ -40,11 +16,6 @@ import f9 from '../assets/images/f9.png';
 import client1 from '../assets/images/client1.jpg';
 import client2 from '../assets/images/client2.jpg';
 import Header from './Header';
-
-// Import gambar Anda
-import client1 from './assets/client1.jpg'; // Ganti dengan path gambar yang benar
-import client2 from './assets/client2.jpg'; // Ganti dengan path gambar yang benar
-
 const slides = [
   {
     img: client1,
@@ -71,9 +42,7 @@ export default function Home() {
     return () => clearInterval(interval);
   }, []);
 
-
-
-return (
+  return (
     <>
       <div className="hero_area">
         <div className="bg-box">

@@ -2,21 +2,20 @@ import React, { useState, useEffect } from 'react';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import herBg from '../assets/images/hero-bg.jpg';
 import aboutImg from '../assets/images/about-img.png';
+
 import { Link } from 'react-router-dom';
 
-
-
-export default function About(){
+export default function Book(){
 return(
-    <>
-     <div className="hero_area">
+<>
+<div className="hero_area">
     <div className="bg-box">
       <img src={herBg} alt=""/>
     </div>
     <header className="header_section">
       <div className="container">
         <nav className="navbar navbar-expand-lg custom_nav-container ">
-          <a className="navbar-brand" to="index.html">
+          <a className="navbar-brand" href="index.html">
             <span>
               Feane
             </span>
@@ -28,25 +27,25 @@ return(
 
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav  mx-auto ">
-             <li className="nav-item">
-                             <Link className="nav-link" to={"/"}>Home </Link>
-                           </li>
-                           <li className="nav-item">
-                             <Link className="nav-link" to={"/menu"}>Menu</Link>
-                           </li>
-                           <li className="nav-item">
-                             <Link className="nav-link" to={"/about"}>About</Link>
-                           </li>
-                           <li className="nav-item active">
-                             <Link className="nav-link" to={"/book"}>Book Table <span className="sr-only">(current)</span> </Link>
-                </li>
+              <li className="nav-item">
+                <Link className="nav-link" to={"/"}>Home </Link>
+              </li>
+              <li className="nav-item">
+                <Link className="nav-link" to={"/menu"}>Menu</Link>
+              </li>
+              <li className="nav-item">
+                <Link className="nav-link" to={"/about"}>About</Link>
+              </li>
+              <li className="nav-item active">
+                <Link className="nav-link" to={"/book"}>Book Table <span className="sr-only">(current)</span> </Link>
+              </li>
             </ul>
             <div className="user_option">
               <a href="" className="user_link">
                 <i className="fa fa-user" aria-hidden="true"></i>
               </a>
               <a className="cart_link" href="#">
-                <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 456.029 456.029" style={{enablebackground:"new 0 0 456.029 456.029"}} xml:space="preserve">
+                <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 456.029 456.029" style={{enablebackground:"new 0 0 456.029 456.029;"}} xml:space="preserve">
                   <g>
                     <g>
                       <path d="M345.6,338.862c-29.184,0-53.248,23.552-53.248,53.248c0,29.184,23.552,53.248,53.248,53.248
@@ -112,37 +111,65 @@ return(
         </nav>
       </div>
     </header>
-    <section className="about_section layout_padding">
-    <div className="container  ">
-
+     <section className="book_section layout_padding">
+    <div className="container">
+      <div className="heading_container">
+        <h2>
+          Book A Table
+        </h2>
+      </div>
       <div className="row">
-        <div className="col-md-6 ">
-          <div className="img-box">
-            <img src={aboutImg} alt=""/>
+        <div className="col-md-6">
+          <div className="form_container">
+            <form action="">
+              <div>
+                <input type="text" className="form-control" placeholder="Your Name" />
+              </div>
+              <div>
+                <input type="text" className="form-control" placeholder="Phone Number" />
+              </div>
+              <div>
+                <input type="email" className="form-control" placeholder="Your Email" />
+              </div>
+              <div>
+                <select className="form-control nice-select wide">
+                  <option value="" disabled selected>
+                    How many persons?
+                  </option>
+                  <option value="">
+                    2
+                  </option>
+                  <option value="">
+                    3
+                  </option>
+                  <option value="">
+                    4
+                  </option>
+                  <option value="">
+                    5
+                  </option>
+                </select>
+              </div>
+              <div>
+                <input type="date" className="form-control"/>
+              </div>
+              <div className="btn_box">
+                <button>
+                  Book Now
+                </button>
+              </div>
+            </form>
           </div>
         </div>
         <div className="col-md-6">
-          <div className="detail-box">
-            <div className="heading_container">
-              <h2>
-                We Are Feane
-              </h2>
-            </div>
-            <p>
-              There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration
-              in some form, by injected humour, or randomised words which don't look even slightly believable. If you
-              are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in
-              the middle of text. All
-            </p>
-            <a href="">
-              Read More
-            </a>
+          <div className="map_container ">
+            <div id="googleMap"></div>
           </div>
         </div>
       </div>
     </div>
   </section>
-        <footer className="footer_section">
+       <footer className="footer_section">
         <div className="container">
           <div className="row">
             <div className="col-md-4 footer-col">
@@ -210,7 +237,6 @@ return(
         </div>
       </footer>
   </div>
-
-    </>
+</>
 );
 }
