@@ -1,27 +1,4 @@
-// FontAwesome
-import '@fortawesome/fontawesome-free/css/all.min.css';
-
-// Bootstrap
-import 'bootstrap/dist/css/bootstrap.min.css';
-import 'bootstrap/dist/js/bootstrap.bundle.min.js';
-
-// jQuery
-import $ from 'jquery';
-window.$ = $;
-window.jQuery = $;
-
-// Isotope
-import Isotope from 'isotope-layout';
-
-// Nice Select
-import 'jquery-nice-select/css/nice-select.css';
-import 'jquery-nice-select';
-
-// Custom CSS
-import '../assets/css/bootstrap.css'; // kalau kamu memang punya versi custom
-import '../assets/css/style.css';
-import '../assets/css/responsive.css';
-
+import React, { useState, useEffect } from 'react';
 import herBg from '../assets/images/hero-bg.jpg';
 import aboutImg from '../assets/images/about-img.png';
 import o1 from '../assets/images/o1.jpg';
@@ -37,8 +14,32 @@ import f8 from '../assets/images/f8.png';
 import f9 from '../assets/images/f9.png';
 import client1 from '../assets/images/client1.jpg';
 import client2 from '../assets/images/client2.jpg';
+const slides = [
+  {
+    img: client1,
+    name: 'Moana Michell',
+    comment: 'Lorem ipsum dolor sit amet...',
+    subtext: 'magna aliqua',
+  },
+  {
+    img: client2,
+    name: 'Mike Hamell',
+    comment: 'Consectetur adipiscing elit...',
+    subtext: 'magna aliqua',
+  },
+];
 
-export default function TaskDetail() {
+export default function Home() {
+  const [current, setCurrent] = useState(0);
+
+  // Slide otomatis setiap 3 detik
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrent((prev) => (prev + 1) % slides.length);
+    }, 3000);
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <>
       <div className="hero_area">
@@ -1117,41 +1118,118 @@ export default function TaskDetail() {
         </div>
       </section>
 
-      <section className="client_section layout_padding-bottom">
-        <div className="container">
-          <div className="heading_container heading_center psudo_white_primary mb_45">
-            <h2>What Says Our Customers</h2>
-          </div>
-          <div className="carousel-wrap row">
-            <div className="owl-carousel client_owl-carousel">
-              <div className="item">
-                <div className="box">
-                  <div className="detail-box">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam</p>
-                    <h6>Moana Michell</h6>
-                    <p>magna aliqua</p>
-                  </div>
-                  <div className="img-box">
-                    <img src={client1} alt="" className="box-img" />
-                  </div>
-                </div>
+      <section
+        style={{
+          padding: '50px 0',
+          background: 'linear-gradient(135deg, #000000, #1a1a1a)',
+          color: '#fff',
+        }}
+      >
+        <div style={{ maxWidth: '800px', margin: '0 auto', textAlign: 'center' }}>
+          <h2 style={{ marginBottom: '40px' }}>What Says Our Customers</h2>
+
+          <div style={{ position: 'relative', height: '350px' }}>
+            {slides.map((slide, index) => (
+              <div
+                key={index}
+                style={{
+                  display: index === current ? 'block' : 'none',
+                  transition: 'opacity 0.5s ease-in-out',
+                  position: 'absolute',
+                  width: '100%',
+                  top: 0,
+                  left: 0,
+                }}
+              >
+                <p style={{ fontStyle: 'italic', marginBottom: '20px' }}>{slide.comment}</p>
+                <h6 style={{ marginBottom: '15px', fontWeight: 'bold' }}>{slide.name}</h6>
+                <p style={{ marginBottom: '20px' }}>{slide.subtext}</p>
+                <img
+                  src={slide.img}
+                  alt={slide.name}
+                  style={{
+                    width: '150px',
+                    height: '150px',
+                    borderRadius: '50%',
+                    objectFit: 'cover',
+                    margin: '0 auto',
+                    display: 'block',
+                    border: '4px solid #fff',
+                  }}
+                />
               </div>
-              <div className="item">
-                <div className="box">
-                  <div className="detail-box">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam</p>
-                    <h6>Mike Hamell</h6>
-                    <p>magna aliqua</p>
-                  </div>
-                  <div className="img-box">
-                    <img src={client2} alt="" className="box-img" />
-                  </div>
-                </div>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
       </section>
+
+      <footer className="footer_section">
+        <div className="container">
+          <div className="row">
+            <div className="col-md-4 footer-col">
+              <div className="footer_contact">
+                <h4>Contact Us</h4>
+                <div className="contact_link_box">
+                  <a href="">
+                    <i className="fa fa-map-marker" aria-hidden="true"></i>
+                    <span> Location </span>
+                  </a>
+                  <a href="">
+                    <i className="fa fa-phone" aria-hidden="true"></i>
+                    <span> Call +01 1234567890 </span>
+                  </a>
+                  <a href="">
+                    <i className="fa fa-envelope" aria-hidden="true"></i>
+                    <span> demo@gmail.com </span>
+                  </a>
+                </div>
+              </div>
+            </div>
+            <div className="col-md-4 footer-col">
+              <div className="footer_detail">
+                <a href="" className="footer-logo">
+                  {' '}
+                  Feane{' '}
+                </a>
+                <p>Necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with</p>
+                <div className="footer_social">
+                  <a href="">
+                    <i className="fa fa-facebook" aria-hidden="true"></i>
+                  </a>
+                  <a href="">
+                    <i className="fa fa-twitter" aria-hidden="true"></i>
+                  </a>
+                  <a href="">
+                    <i className="fa fa-linkedin" aria-hidden="true"></i>
+                  </a>
+                  <a href="">
+                    <i className="fa fa-instagram" aria-hidden="true"></i>
+                  </a>
+                  <a href="">
+                    <i className="fa fa-pinterest" aria-hidden="true"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+            <div className="col-md-4 footer-col">
+              <h4>Opening Hours</h4>
+              <p>Everyday</p>
+              <p>10.00 Am -10.00 Pm</p>
+            </div>
+          </div>
+          <div className="footer-info">
+            <p>
+              &copy; <span id="displayYear"></span> All Rights Reserved By <a href="https://html.design/">Free Html Templates</a>
+              <br />
+              <br />
+              &copy; <span id="displayYear"></span> Distributed By
+              <a href="https://themewagon.com/" target="_blank">
+                ThemeWagon
+              </a>
+            </p>
+          </div>
+        </div>
+      </footer>
     </>
   );
 }
