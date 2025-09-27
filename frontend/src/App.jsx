@@ -1,14 +1,14 @@
 import { Routes, Route } from 'react-router-dom';
-// import TaskForm from './components/TaskForm';
-// import TaskList from './components/TaskList';
-// import TaskEdit from './components/TasksEdit';
 import Home from './components/Home';
+import Menu from './components/menu'; // pastikan huruf besar sesuai
+import About from './component/about';
+
 
 export default function App() {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
-      <Route path="/index" element={<Home />} />
+      <Route path="/menu" element={<Menu />} />
     </Routes>
   );
 }
