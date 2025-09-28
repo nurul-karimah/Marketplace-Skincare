@@ -1,9 +1,8 @@
 import { Sequelize } from "sequelize";
 
-const sequelize = new Sequelize("taskdb", "postgres", "Rakkha-17", {
+const sequelize = new Sequelize("marketplace_skincare", "root", "root", {
   host: "localhost",
-  dialect: "postgres",
-  logging: false,
+  dialect: "mysql" // ✅ BUKAN root
 });
 
 export default sequelize;

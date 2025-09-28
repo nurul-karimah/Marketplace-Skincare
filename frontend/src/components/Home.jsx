@@ -46,7 +46,7 @@ export default function Home() {
     <>
       <div className="hero_area">
         <div className="bg-box">
-          <img src={herBg} alt="" />
+          <img src={herBg} alt="" style={{ height: '1080px', width: '1920' }} />
         </div>
 
         <Header />
