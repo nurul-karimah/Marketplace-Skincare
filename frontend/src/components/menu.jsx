@@ -743,7 +743,7 @@ export default function Menu() {
         </section>
       </div>
 
-      <footer className="footer_section">
+       <footer className="footer_section">
         <div className="container">
           <div className="row">
             <div className="col-md-4 footer-col">
@@ -756,11 +756,11 @@ export default function Menu() {
                   </a>
                   <a href="">
                     <i className="fa fa-phone" aria-hidden="true"></i>
-                    <span> Call +01 1234567890 </span>
+                    <span> Call +62 1234567890 </span>
                   </a>
                   <a href="">
                     <i className="fa fa-envelope" aria-hidden="true"></i>
-                    <span> demo@gmail.com </span>
+                    <span> herbalbeauty@gmail.com </span>
                   </a>
                 </div>
               </div>
@@ -769,9 +769,9 @@ export default function Menu() {
               <div className="footer_detail">
                 <a href="" className="footer-logo">
                   {' '}
-                  Feane{' '}
+                  Natural Nusantara{' '}
                 </a>
-                <p>Necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with</p>
+                <p>Pola bisnis NASA telah membantu banyak orang mengatasi persoalan ekonomi dan mengatasi pengangguran serta mendorong bertumbuh kembangnya wirausaha (SOCIOPRENEUR)</p>
                 <div className="footer_social">
                   <a href="">
                     <i className="fa fa-facebook" aria-hidden="true"></i>
@@ -792,19 +792,19 @@ export default function Menu() {
               </div>
             </div>
             <div className="col-md-4 footer-col">
-              <h4>Opening Hours</h4>
+              <h4>Free Konsultasi</h4>
               <p>Everyday</p>
-              <p>10.00 Am -10.00 Pm</p>
+              <p>08.00 Am -10.00 Pm</p>
             </div>
           </div>
           <div className="footer-info">
             <p>
-              &copy; <span id="displayYear"></span> All Rights Reserved By <a href="https://html.design/">Free Html Templates</a>
+              &copy; <span id="displayYear"></span> All Rights Reserved By <a href="https://html.design/">Design Herbalis</a>
               <br />
               <br />
-              &copy; <span id="displayYear"></span> Distributed By
-              <a href="https://themewagon.com/" target="_blank">
-                ThemeWagon
+              &copy; <span id="displayYear"></span> Distributed By <tr></tr>
+              <a to="hhttps://naturalnusantara.co.id//" target="_blank">
+                Natural_Nusantara
               </a>
             </p>
           </div>
