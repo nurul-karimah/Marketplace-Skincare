@@ -16,7 +16,7 @@ export default function Book() {
           <div className="container">
             <nav className="navbar navbar-expand-lg custom_nav-container ">
               <a className="navbar-brand" href="index.html">
-                <span>Feane</span>
+                <span>Natural Nusantara</span>
               </a>
 
               <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -31,8 +31,8 @@ export default function Book() {
                     </Link>
                   </li>
                   <li className="nav-item">
-                    <Link className="nav-link" to={'/menu'}>
-                      Menu
+                    <Link className="nav-link" to={'/produk'}>
+                      Produk
                     </Link>
                   </li>
                   <li className="nav-item">
@@ -139,12 +139,17 @@ export default function Book() {
                     <div>
                       <select className="form-control nice-select wide">
                         <option value="" disabled selected>
-                          How many persons?
+                          How many produk?
                         </option>
+                        <option value="">1</option>
                         <option value="">2</option>
                         <option value="">3</option>
                         <option value="">4</option>
                         <option value="">5</option>
+                        <option value="">6</option>
+                        <option value="">7</option>
+                        <option value="">8</option>
+                        <option value="">9</option>
                       </select>
                     </div>
                     <div>

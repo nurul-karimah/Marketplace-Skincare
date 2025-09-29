@@ -16,8 +16,8 @@ const Header = () => {
                 </Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" to={'/menu'} style={{ color: 'black' }}>
-                  Menu
+                <Link className="nav-link" to={'/produk'} style={{ color: 'black' }}>
+                  Produk
                 </Link>
               </li>
               <li className="nav-item">

@@ -10,33 +10,49 @@ import f3 from '../assets/images/f3.png';
 import f4 from '../assets/images/f4.png';
 import f5 from '../assets/images/f5.png';
 import f6 from '../assets/images/f6.png';
-import f7 from '../assets/images/f7.png';
 import f8 from '../assets/images/f8.png';
 import f9 from '../assets/images/f9.png';
 import f10 from '../assets/images/f10.jpg';
+import f11 from '../assets/images/f11.jpeg';
+import f12 from '../assets/images/f12.jpeg';
+import f13 from '../assets/images/f13.jpeg';
+import f14 from '../assets/images/f14.jpeg';
+import f15 from '../assets/images/f15.jpeg';
 import client1 from '../assets/images/client1.jpg';
 import client2 from '../assets/images/client2.jpg';
 import Header from './Header';
+import { Link } from 'react-router-dom';
 
 const products = [
   { id: 1, title: 'Moreskin BodyCare', price: 20, img: f1, category: 'bodycare' },
-  { id: 2, title: 'earhsaly feeling spray', price: 15, img: f2, category: 'bodycare' },
-  { id: 3, title: 'Dark Spot Easence', price: 17, img: f9, category: 'skincare' },
-  { id: 4, title: 'Water Melon Glow Mask', price: 80, img: f10, category: 'skincare' },
+  { id: 2, title: 'Moreskin Collaskin Body Lotion', price: 15, img: f2, category: 'bodycare' },
+  { id: 3, title: 'erhsali feeling spray', price: 15, img: f3, category: 'bodycare' },
+  { id: 4, title: 'Moreskin Lotion Mashmallow', price: 15, img: f4, category: 'bodycare' },
+  { id: 5, title: 'Moreskin Body Butter Whitening Gold ', price: 15, img: f5, category: 'bodycare' },
+  { id: 6, title: 'Ory Soap ', price: 15, img: f6, category: 'bodycare' },
+  { id: 8, title: 'Grace ', price: 15, img: f8, category: 'bodycare' },
+  { id: 9, title: 'Dark Spot Easence', price: 17, img: f9, category: 'skincare' },
+  { id: 10, title: 'Water Melon Glow Mask', price: 80, img: f10, category: 'skincare' },
+  { id: 11, title: '5% Baquchiol Essence', price: 80, img: f11, category: 'skincare' },
+  { id: 12, title: 'Aloevera Shooting Face Mist', price: 80, img: f12, category: 'skincare' },
+  { id: 13, title: 'Grape Fruit Acne Fight Serum', price: 80, img: f13, category: 'skincare' },
+  { id: 14, title: 'Hidrating Divine Essence ', price: 80, img: f14, category: 'skincare' },
+  { id: 15, title: 'Amazonian Charcoal Glow Mask', price: 80, img: f15, category: 'skincare' },
+  
   // tambahkan produk lain sesuai kebutuhan
 ];
 const slides = [
   {
     img: client1,
-    name: 'Moana Michell',
-    comment: 'Lorem ipsum dolor sit amet...',
-    subtext: 'magna aliqua',
+    name: 'Nurul',
+    comment: 'Produk Herbal yang terbukti keherbalan alaminya...',
+    subtext: 'Dark Spot Essence',
   },
   {
     img: client2,
     name: 'Mike Hamell',
     comment: 'Consectetur adipiscing elit...',
-    subtext: 'magna aliqua',
+    subtext: 'Lacoco',
   },
 ];
 
@@ -116,7 +132,7 @@ export default function Home() {
               <div className="col-md-6">
                 <div className="box">
                   <div className="img-box">
-                    <img src={o1} alt="" />
+                    <img src={f9} alt="" />
                   </div>
                   <div className="detail-box">
                     <h5>Dark Spot Essence</h5>
@@ -185,7 +201,7 @@ export default function Home() {
               <div className="col-md-6">
                 <div className="box">
                   <div className="img-box">
-                    <img src={o2} alt="" />
+                    <img src={f5} alt="" />
                   </div>
                   <div className="detail-box">
                     <h5>Moreskin Body Butter Whitening Gold</h5>
@@ -255,15 +271,15 @@ export default function Home() {
           </div>
         </div>
       </section>
-      <section className="food_section layout_padding-bottom">
+      <section className="produk_section layout_padding-bottom">
         <div className="container">
           <div className="heading_container heading_center">
             <h2>Our Product</h2>
           </div>
 
-          <div className="product-section">
-            {/* Filter Menu */}
-            <ul className="filters_menu">
+          <div className="produk-section">
+            {/* Filter Produk */}
+            <ul className="filters_Produk">
               <li className={activeFilter === 'all' ? 'active' : ''} onClick={() => setActiveFilter('all')}>
                 All Product
               </li>
@@ -320,10 +336,11 @@ export default function Home() {
                 <div className="heading_container">
                   <h2>We Are Natural Nusantara</h2>
                 </div>
-                <p>
-                  There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to
-                  use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All
-                </p>
+                 <p style={{ textAlign: "justify" }}>
+                    PT Natural Nusantara (NASA) adalah perusahaan asli Indonesia yang didirikan pada Oktober 2002 di Yogyakarta, berfokus pada distribusi produk agrokompleks, kesehatan, kosmetik, dan perawatan tubuh berbasis organik dan herbal.
+                    Perusahaan ini memiliki visi untuk mewujudkan hidup yang bahagia dan sejahtera selaras alam, serta berupaya memberdayakan sumber daya alam dan manusia melalui produk yang ramah lingkungan dan karya anak bangsa.
+                    Kantor pusat PT NASA terletak di Jalan Ring Road Barat 72 Salaka, Trihanggo, Gamping, Sleman, Yogyakarta.
+                  </p>
                 <a href="#">Read More</a>
               </div>
             </div>
@@ -352,7 +369,7 @@ export default function Home() {
                   <div>
                     <select className="form-control nice-select wide">
                       <option value="" disabled selected>
-                        How many persons?
+                        How many produk?
                       </option>
                       <option value="">2</option>
                       <option value="">3</option>
@@ -423,7 +440,7 @@ export default function Home() {
         </div>
       </section>
 
-      <footer className="footer_section">
+     <footer className="footer_section">
         <div className="container">
           <div className="row">
             <div className="col-md-4 footer-col">
@@ -436,11 +453,11 @@ export default function Home() {
                   </a>
                   <a href="">
                     <i className="fa fa-phone" aria-hidden="true"></i>
-                    <span> Call +01 1234567890 </span>
+                    <span> Call +62 1234567890 </span>
                   </a>
                   <a href="">
                     <i className="fa fa-envelope" aria-hidden="true"></i>
-                    <span> demo@gmail.com </span>
+                    <span> herbalbeauty@gmail.com </span>
                   </a>
                 </div>
               </div>
@@ -449,9 +466,9 @@ export default function Home() {
               <div className="footer_detail">
                 <a href="" className="footer-logo">
                   {' '}
-                  Feane{' '}
+                  Natural Nusantara{' '}
                 </a>
-                <p>Necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with</p>
+                <p>Pola bisnis NASA telah membantu banyak orang mengatasi persoalan ekonomi dan mengatasi pengangguran serta mendorong bertumbuh kembangnya wirausaha (SOCIOPRENEUR)</p>
                 <div className="footer_social">
                   <a href="">
                     <i className="fa fa-facebook" aria-hidden="true"></i>
@@ -472,19 +489,19 @@ export default function Home() {
               </div>
             </div>
             <div className="col-md-4 footer-col">
-              <h4>Opening Hours</h4>
+              <h4>Free Konsultasi</h4>
               <p>Everyday</p>
-              <p>10.00 Am -10.00 Pm</p>
+              <p>08.00 Am -10.00 Pm</p>
             </div>
           </div>
           <div className="footer-info">
             <p>
-              &copy; <span id="displayYear"></span> All Rights Reserved By <a href="https://html.design/">Free Html Templates</a>
+              &copy; <span id="displayYear"></span> All Rights Reserved By <a href="https://html.design/">Design Herbalis</a>
               <br />
               <br />
-              &copy; <span id="displayYear"></span> Distributed By
-              <a href="https://themewagon.com/" target="_blank">
-                ThemeWagon
+              &copy; <span id="displayYear"></span> Distributed By <tr></tr>
+              <a to="hhttps://naturalnusantara.co.id//" target="_blank">
+                Natural_Nusantara
               </a>
             </p>
           </div>

@@ -125,7 +125,7 @@ return(
           <div className="detail-box">
             <div className="heading_container">
               <h2>
-                We Are Feane
+                We Are Natural Nusantara
               </h2>
             </div>
             <p>
