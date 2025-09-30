@@ -490,7 +490,7 @@ export default function Home() {
               <h4>Free Konsultasi</h4>
               <p>Everyday</p>
               <p>08.00 Am -10.00 Pm</p>
-              <p>WhatsApp 085-922-133</p>
+              <p>WhatsApp 085-922-133-766</p>
             </div>
           </div>
           <div className="footer-info">

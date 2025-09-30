@@ -128,12 +128,11 @@ return(
                 We Are Natural Nusantara
               </h2>
             </div>
-            <p>
-              There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration
-              in some form, by injected humour, or randomised words which don't look even slightly believable. If you
-              are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in
-              the middle of text. All
-            </p>
+            <p style={{ textAlign: "justify" }}>
+                    PT Natural Nusantara (NASA) adalah perusahaan asli Indonesia yang didirikan pada Oktober 2002 di Yogyakarta, berfokus pada distribusi produk agrokompleks, kesehatan, kosmetik, dan perawatan tubuh berbasis organik dan herbal.
+                    Perusahaan ini memiliki visi untuk mewujudkan hidup yang bahagia dan sejahtera selaras alam, serta berupaya memberdayakan sumber daya alam dan manusia melalui produk yang ramah lingkungan dan karya anak bangsa.
+                    Kantor pusat PT NASA terletak di Jalan Ring Road Barat 72 Salaka, Trihanggo, Gamping, Sleman, Yogyakarta.
+                  </p>
             <a href="">
               Read More
             </a>
@@ -194,7 +193,7 @@ return(
               <h4>Free Konsultasi</h4>
               <p>Everyday</p>
               <p>08.00 Am -10.00 Pm</p>
-              <p>WhatsApp 085-922-133</p>
+              <p>WhatsApp 085-922-133-766</p>
             </div>
           </div>
           <div className="footer-info">
