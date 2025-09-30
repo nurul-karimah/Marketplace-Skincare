@@ -32,7 +32,7 @@ return(
                              <Link className="nav-link" to={"/"}>Home </Link>
                            </li>
                            <li className="nav-item">
-                             <Link className="nav-link" to={"/menu"}>Menu</Link>
+                             <Link className="nav-link" to={"/produk"}>Produk</Link>
                            </li>
                            <li className="nav-item">
                              <Link className="nav-link" to={"/about"}>About</Link>
@@ -194,6 +194,7 @@ return(
               <h4>Free Konsultasi</h4>
               <p>Everyday</p>
               <p>08.00 Am -10.00 Pm</p>
+              <p>WhatsApp 085-922-133</p>
             </div>
           </div>
           <div className="footer-info">

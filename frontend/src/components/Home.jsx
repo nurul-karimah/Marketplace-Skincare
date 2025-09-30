@@ -2,8 +2,6 @@ import React, { useState, useEffect } from 'react';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import herBg from '../assets/images/hero-bg.jpg';
 import aboutImg from '../assets/images/about-img.png';
-import o1 from '../assets/images/o1.jpg';
-import o2 from '../assets/images/o2.jpg';
 import f1 from '../assets/images/f1.png';
 import f2 from '../assets/images/f2.png';
 import f3 from '../assets/images/f3.png';
@@ -287,7 +285,7 @@ export default function Home() {
                 Skincare
               </li>
               <li className={activeFilter === 'bodycare' ? 'active' : ''} onClick={() => setActiveFilter('bodycare')}>
-                Body Care
+                Bodycare
               </li>
             </ul>
 
@@ -302,10 +300,10 @@ export default function Home() {
                       </div>
                       <div className="detail-box">
                         <h5>{product.title}</h5>
-                        <p>Veniam debitis quaerat officiis quasi cupiditate quo, quisquam velit, magnam voluptatem repellendus sed eaque</p>
+                        <p>Produk Kecantikan Herbal NASA</p>
                         <div className="options">
                           <h6>${product.price}</h6>
-                          <a href="#">🛒</a>
+                          <Link href="f1">🛒</Link>
                         </div>
                       </div>
                     </div>
@@ -492,6 +490,7 @@ export default function Home() {
               <h4>Free Konsultasi</h4>
               <p>Everyday</p>
               <p>08.00 Am -10.00 Pm</p>
+              <p>WhatsApp 085-922-133</p>
             </div>
           </div>
           <div className="footer-info">

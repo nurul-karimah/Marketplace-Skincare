@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import herBg from '../assets/images/hero-bg.jpg';
-import aboutImg from '../assets/images/about-img.png';
-
 import { Link } from 'react-router-dom';
 
 export default function Book() {
@@ -221,6 +219,7 @@ export default function Book() {
                 <h4>Free Konsultasi</h4>
                 <p>Everyday</p>
                 <p>08.00 Am -10.00 Pm</p>
+                <p>WhatsApp 085-922-133</p>
               </div>
             </div>
             <div className="footer-info">
