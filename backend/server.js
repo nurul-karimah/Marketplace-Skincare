@@ -11,11 +11,11 @@ const startServer = async () => {
     console.log("Database connected...");
 
     // Sync semua model ke database
-    await sequelize.sync({ alter: true }); 
+    // await sequelize.sync({ alter: true }); 
     // ⚠️ alter:true => update table kalau ada perubahan model
     // ⚠️ force:true => drop table lama lalu buat ulang (hati-hati data hilang)
 
-    console.log("All tables synced...");
+    // console.log("All tables synced...");
 
     app.listen(PORT, () => {
       console.log(`Server running on http://localhost:${PORT}`);
