@@ -74,24 +74,8 @@ export default function Produk() {
                   </li>
                 </ul>
 
-<<<<<<< HEAD
-                <div className="user_option">
-                  <Link to="" className="user_link" style={{ color: 'white' }}>
-                    <i className="fa fa-user" aria-hidden="true"></i>
-                  </Link>
-                  <Link className="cart_link" to="#" style={{ color: 'white' }}>
-                    {/* SVG cart tetap */}
-                  </Link>
-                  <form className="form-inline">
-                    <button className="btn my-2 my-sm-0 nav_search-btn" type="submit">
-                      <i className="fa fa-search" aria-hidden="true"></i>
-                    </button>
-                  </form>
-                  <Link to="" className="order_online" style={{ color: 'white' }}>
-                    Order Online
-                  </Link>
-=======
-                <div className="user_option d-flex align-items-center gap-3">
+
+      <div className="user_option d-flex align-items-center gap-3">
                   {/* ✅ Jika belum login */}
                   {!user && (
                     <>
@@ -127,7 +111,7 @@ export default function Produk() {
                       </button>
                     </>
                   )}
->>>>>>> 7f906dc430a464c30f5c3b692b649ddf85a20394
+
                 </div>
               </div>
             </nav>
@@ -826,17 +810,13 @@ export default function Produk() {
                         <img src={f13} alt="" />
                       </div>
                       <div className="detail-box">
-<<<<<<< HEAD
-                        <h5> Lacoco Grapefruit Acne Fighter Serum </h5>
-                        <p style={{ textAlign: "justify" }}>
-                          Manfaat Lacoco Grapefruit Acne Fighter Serum meliputi merawat jerawat aktif, mengurangi kemerahan, mengecilkan pori, mengangkat sel kulit mati, dan merawat bekas jerawat. </p><p> cara pakai bersihkan wajah Anda terlebih dahulu, lalu teteskan 3-4 tetes serum ke seluruh wajah dan ratakan dengan lembut. Gunakan serum di pagi dan malam hari setelah toner dan sebelum pelembap, dan jangan lupa untuk memakai sunscreen serta menghindari paparan sinar matahari langsung setelahnya.  </p>
-=======
+
                         <h5> Lacoco Grape Serum </h5>
                         <p style={{ textAlign: 'justify' }}>
                           Masker tidur yang berfungsi untuk mencerahkan, melembapkan, dan mengenyalkan kulit wajah, serta melawan tanda penuaan dini dan memudarkan bekas jerawat. Masker ini diaplikasikan setelah rutinitas perawatan wajah
                           lainnya, dibiarkan semalaman, dan dibilas keesokan paginya untuk mendapatkan kulit yang lebih sehat, cerah, dan kenyal.{' '}
                         </p>
->>>>>>> 7f906dc430a464c30f5c3b692b649ddf85a20394
+
                         <div className="options">
                           <h6>$15</h6>
                           <a href="">

@@ -1,6 +1,6 @@
 import { Sequelize } from "sequelize";
 
-const sequelize = new Sequelize("marketplace_skincare", "root", "root", {
+const sequelize = new Sequelize("marketplace_skincare", "root", "", {
   host: "localhost",
   dialect: "mysql" // ✅ BUKAN root
 });

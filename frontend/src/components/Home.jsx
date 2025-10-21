@@ -69,7 +69,8 @@ export default function Home() {
       alert('Silakan daftar atau login terlebih dahulu sebelum memesan.');
       navigate('/LoginUser'); // arahkan ke halaman register
     } else {
-      navigate(/CreateOrder/${productId}); // langsung ke halaman create order
+      navigate(`/CreateOrder/${productId}`);
+// langsung ke halaman create order
     }
   };
 
@@ -84,7 +85,8 @@ export default function Home() {
           title: p.name,
           price: p.price,
           description: p.description,
-          img: http://localhost:5000/products/${p.photo}, // <- langsung ambil file statis
+          img: `http://localhost:5000/products/${p.photo}`,
+ // <- langsung ambil file statis
           category: p.Category?.name?.toLowerCase() || 'other',
         }));
 
@@ -152,7 +154,7 @@ export default function Home() {
         <div
           className="bg-box"
           style={{
-            backgroundImage: url(${herBg}),
+            backgroundImage: `url(${herBg})`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
             aspectRatio: '16/9', // selalu jaga rasio
@@ -356,7 +358,8 @@ export default function Home() {
             <div className="filters-content">
               <div className="row grid">
                 {filteredProducts.map((product) => (
-                  <div key={product.id} className={col-sm-6 col-lg-4 all ${product.category}}>
+                  <div key={product.id} className={`col-sm-6 col-lg-4 all ${product.category}`}>
+
                     <div className="box product-card">
                       <div className="img-box">
                         <img src={product.img} alt={product.title} />
