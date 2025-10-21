@@ -26,6 +26,11 @@ const Product = sequelize.define(
       type: DataTypes.INTEGER,
       allowNull: true,
     },
+    stok: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      defaultValue: 0, // agar tidak null
+    },
   },
   {
     tableName: "products",
@@ -36,6 +41,5 @@ const Product = sequelize.define(
 // Relasi: 1 Category bisa punya banyak Product
 Category.hasMany(Product, { foreignKey: "categoryId" });
 Product.belongsTo(Category, { foreignKey: "categoryId" }); // ✅ pastikan sama
-
 
 export default Product;
