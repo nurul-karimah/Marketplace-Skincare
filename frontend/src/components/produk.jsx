@@ -1,4 +1,5 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 import herBg from '../assets/images/hero-bg.jpg';
 import f1 from '../assets/images/f1.png';
 import f2 from '../assets/images/f2.png';
@@ -20,61 +21,95 @@ import f18 from '../assets/images/f18.jpg';
 import client1 from '../assets/images/client1.jpg';
 import client2 from '../assets/images/client2.jpg';
 export default function Produk() {
+  const navigate = useNavigate();
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    // Ambil user dari localStorage
+    const storedUser = JSON.parse(localStorage.getItem('user'));
+    if (storedUser) {
+      setUser(storedUser);
+    }
+  }, []);
+
+  // Fungsi logout
+  const handleLogout = () => {
+    localStorage.removeItem('user');
+    alert('Anda telah logout!');
+    setUser(null);
+    navigate('/'); // arahkan ke halaman utama
+  };
+
   return (
     <>
       <div className="hero_area">
-        <header className="header_section" style={{ backgroundColor: 'black' }}>
+        <header className="header_section" style={{ color: 'black' }}>
           <div className="container">
             <nav className="navbar navbar-expand-lg custom_nav-container">
-              <a className="navbar-brand" href="index.html" style={{ color: 'white' }}>
-                <span>Natural Nusantara</span>
+              <a className="navbar-brand" href="/" style={{ color: 'black' }}>
+                <span style={{ color: 'black', fontWeight: 'bold' }}>Natural Nusantara</span>
               </a>
-
-              <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span className="" style={{ backgroundColor: 'white' }}>
-                  {' '}
-                </span>
-              </button>
 
               <div className="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul className="navbar-nav mx-auto">
-                  <li className="nav-item">
-                    <Link className="nav-link" to={'/'} style={{ color: 'white' }}>
-                      Home
-                    </Link>
-                  </li>
                   <li className="nav-item active">
-                    <Link className="nav-link" to={'/'} style={{ color: 'white' }}>
-                      Produk <span className="sr-only">(current)</span>
+                    <Link className="nav-link" to={'/'} style={{ color: 'black' }}>
+                      Home <span className="sr-only">(current)</span>
                     </Link>
                   </li>
                   <li className="nav-item">
-                    <Link className="nav-link" to={'/'} style={{ color: 'white' }}>
+                    <Link className="nav-link" to={'/produk'} style={{ color: 'black' }}>
+                      Produk
+                    </Link>
+                  </li>
+                  <li className="nav-item">
+                    <Link className="nav-link" to={'/about'} style={{ color: 'black' }}>
                       About
                     </Link>
                   </li>
                   <li className="nav-item">
-                    <Link className="nav-link" to={'/'} style={{ color: 'white' }}>
+                    <a className="nav-link" href="/book" style={{ color: 'black' }}>
                       Book Table
-                    </Link>
+                    </a>
                   </li>
                 </ul>
 
-                <div className="user_option">
-                  <a href="" className="user_link" style={{ color: 'white' }}>
-                    <i className="fa fa-user" aria-hidden="true"></i>
-                  </a>
-                  <a className="cart_link" href="#" style={{ color: 'white' }}>
-                    {/* SVG cart tetap */}
-                  </a>
-                  <form className="form-inline">
-                    <button className="btn my-2 my-sm-0 nav_search-btn" type="submit">
-                      <i className="fa fa-search" aria-hidden="true"></i>
-                    </button>
-                  </form>
-                  <a href="" className="order_online" style={{ color: 'white' }}>
-                    Order Online
-                  </a>
+                <div className="user_option d-flex align-items-center gap-3">
+                  {/* ✅ Jika belum login */}
+                  {!user && (
+                    <>
+                      <Link to={'/LoginAdmin'} className="user_link" style={{ color: 'black' }}>
+                        <i className="fa fa-user" aria-hidden="true"></i>
+                      </Link>
+
+                      <a className="cart_link" href="/" style={{ color: 'black' }}>
+                        <i className="fa fa-cart" aria-hidden="true"></i>
+                      </a>
+
+                      <form className="form-inline">
+                        <button className="btn my-2 my-sm-0 nav_search-btn" type="submit" style={{ color: 'black' }}>
+                          <i className="fa fa-search" aria-hidden="true"></i>
+                        </button>
+                      </form>
+
+                      <a href="/" className="order_online" style={{ color: 'black' }}>
+                        Order Online
+                      </a>
+                    </>
+                  )}
+
+                  {/* ✅ Jika sudah login */}
+                  {user && (
+                    <>
+                      <button onClick={() => navigate('/User')} className="btn btn-outline-dark btn-sm">
+                        <i className="fa fa-user"></i> Kembali ke User
+                      </button>
+
+                      <button onClick={handleLogout} className="btn btn-danger btn-sm">
+                        <i className="fa fa-sign-out"></i> Logout
+                      </button>
+                    </>
+                  )}
                 </div>
               </div>
             </nav>
@@ -99,7 +134,6 @@ export default function Produk() {
               </li>
               <li data-filter=".burger">Skincare</li>
               <li data-filter=".pizza">Bodycare</li>
-             
             </ul>
 
             <div className="filters-content">
@@ -112,8 +146,12 @@ export default function Produk() {
                       </div>
                       <div className="detail-box">
                         <h5>Body Wash Moreskin </h5>
-                        <p style={{ textAlign: "justify" }}>
-                          Body wash Moreskin bervariasi tergantung variannya, seperti mencerahkan kulit (Nature, Glow, Yogurt), melembapkan (Yogurt, Nature), dan mengurangi jerawat punggung (Glow), berkat kandungan bahan alami seperti ekstrak yogurt, biji mentimun, dan alpha arbutin.</p> <p> Cara memakainya adalah dengan membahasi tubuh, menuangkan secukupnya ke tangan atau spon, mengusapkannya ke seluruh tubuh hingga berbusa, lalu membilasnya hingga bersih. </p>       <div className="options">
+                        <p style={{ textAlign: 'justify' }}>
+                          Body wash Moreskin bervariasi tergantung variannya, seperti mencerahkan kulit (Nature, Glow, Yogurt), melembapkan (Yogurt, Nature), dan mengurangi jerawat punggung (Glow), berkat kandungan bahan alami seperti
+                          ekstrak yogurt, biji mentimun, dan alpha arbutin.
+                        </p>{' '}
+                        <p> Cara memakainya adalah dengan membahasi tubuh, menuangkan secukupnya ke tangan atau spon, mengusapkannya ke seluruh tubuh hingga berbusa, lalu membilasnya hingga bersih. </p>{' '}
+                        <div className="options">
                           <h6>$20</h6>
                           <a href="">
                             <svg
@@ -183,8 +221,11 @@ export default function Produk() {
                       </div>
                       <div className="detail-box">
                         <h5>Collaskin Body Lotion</h5>
-                        <p style={{ textAlign: "justify" }}>
-                          Bermanfaat untuk mencerahkan, melembapkan, dan menutrisi kulit tubuh agar lebih kenyal, halus, dan tampak lebih muda dengan meningkatkan elastisitas kulit dan menghambat penuaan dini.</p> <p> Cara pakainya adalah setelah mandi, keringkan tubuh hingga benar-benar kering, lalu tuangkan sedikit lotion ke telapak tangan dan usapkan secara merata ke seluruh permukaan kulit, minimal dua kali sehari. </p>  <div className="options">
+                        <p style={{ textAlign: 'justify' }}>
+                          Bermanfaat untuk mencerahkan, melembapkan, dan menutrisi kulit tubuh agar lebih kenyal, halus, dan tampak lebih muda dengan meningkatkan elastisitas kulit dan menghambat penuaan dini.
+                        </p>{' '}
+                        <p> Cara pakainya adalah setelah mandi, keringkan tubuh hingga benar-benar kering, lalu tuangkan sedikit lotion ke telapak tangan dan usapkan secara merata ke seluruh permukaan kulit, minimal dua kali sehari. </p>{' '}
+                        <div className="options">
                           <h6>$15</h6>
                           <a href="">
                             <svg
@@ -254,8 +295,11 @@ export default function Produk() {
                       </div>
                       <div className="detail-box">
                         <h5>Erhsali Feeling Spray</h5>
-                        <p style={{ textAlign: "justify" }}>
-                          Bermanfaat membersihkan kotoran dan sel kulit mati, membuat kulit tampak lebih bersih, halus, dan cerah, serta membantu menjaga kelembapan kulit berkat kandungan Caviar Extract.</p> <p> Cara pakainya adalah dengan menyemprotkan ke area kulit yang diinginkan, lalu menggosoknya perlahan hingga kotoran dan kulit mati terangkat, kemudian bilas dengan air bersih. </p>   <div className="options">
+                        <p style={{ textAlign: 'justify' }}>
+                          Bermanfaat membersihkan kotoran dan sel kulit mati, membuat kulit tampak lebih bersih, halus, dan cerah, serta membantu menjaga kelembapan kulit berkat kandungan Caviar Extract.
+                        </p>{' '}
+                        <p> Cara pakainya adalah dengan menyemprotkan ke area kulit yang diinginkan, lalu menggosoknya perlahan hingga kotoran dan kulit mati terangkat, kemudian bilas dengan air bersih. </p>{' '}
+                        <div className="options">
                           <h6>$17</h6>
                           <a href="">
                             <svg
@@ -325,8 +369,8 @@ export default function Produk() {
                       </div>
                       <div className="detail-box">
                         <h5>Body Lotion Mashmallow</h5>
-                        <p style={{ textAlign: "justify" }}>
-                          Manfaat mencerahkan kulit, melembapkan, dan menghaluskan tubuh berkat kandungan ekstrak mulberry dan olive oil. </p> <p> cara pakainya, oleskan secukupnya pada telapak tangan lalu ratakan ke seluruh bagian tubuh terutama setelah mandi agar penyerapan maksimal dan kulit tetap lembap sepanjang hari. </p>
+                        <p style={{ textAlign: 'justify' }}>Manfaat mencerahkan kulit, melembapkan, dan menghaluskan tubuh berkat kandungan ekstrak mulberry dan olive oil. </p>{' '}
+                        <p> cara pakainya, oleskan secukupnya pada telapak tangan lalu ratakan ke seluruh bagian tubuh terutama setelah mandi agar penyerapan maksimal dan kulit tetap lembap sepanjang hari. </p>
                         <div className="options">
                           <h6>$18</h6>
                           <a href="">
@@ -397,8 +441,9 @@ export default function Produk() {
                       </div>
                       <div className="detail-box">
                         <h5>Moreskin Body Butter Whitening Gold </h5>
-                        <p style={{ textAlign: "justify" }}>
-                          Manfaat membantu melembabkan kulit sehingga kulit tidak kering dan tetap lembut serta membantu mencerahkan kulit. Lulur ini dapat menghilangkan Daki dan mencerahkan Kulit secara alami.</p>
+                        <p style={{ textAlign: 'justify' }}>
+                          Manfaat membantu melembabkan kulit sehingga kulit tidak kering dan tetap lembut serta membantu mencerahkan kulit. Lulur ini dapat menghilangkan Daki dan mencerahkan Kulit secara alami.
+                        </p>
                         <div className="options">
                           <h6>$10</h6>
                           <a href="">
@@ -469,8 +514,10 @@ export default function Produk() {
                       </div>
                       <div className="detail-box">
                         <h5>Soap Rainbow Nasa</h5>
-                        <p style={{ textAlign: "justify" }}>
-                          Rainbow Soap Nasa bermanfaat untuk mencerahkan kulit, menghaluskan, menjaga kelembapan, dan meremajakan kulit dengan mengangkat sel kulit mati serta melindungi dari radikal bebas.</p><p> Cara pakainya adalah dengan mengusapkan atau menggosokkan sabun secara lembut ke seluruh tubuh saat mandi, lalu membilasnya hingga bersih dengan air. </p>
+                        <p style={{ textAlign: 'justify' }}>
+                          Rainbow Soap Nasa bermanfaat untuk mencerahkan kulit, menghaluskan, menjaga kelembapan, dan meremajakan kulit dengan mengangkat sel kulit mati serta melindungi dari radikal bebas.
+                        </p>
+                        <p> Cara pakainya adalah dengan mengusapkan atau menggosokkan sabun secara lembut ke seluruh tubuh saat mandi, lalu membilasnya hingga bersih dengan air. </p>
                         <div className="options">
                           <h6>$15</h6>
                           <a href="">
@@ -541,7 +588,8 @@ export default function Produk() {
                       </div>
                       <div className="detail-box">
                         <h5>Shampo Shanas</h5>
-                        <p style={{ textAlign: "justify" }}>Shampo Shanas memiliki manfaat untuk membersihkan rambut, menjaga kelembapan, kilau, dan kesehatan rambut, serta menguatkan rambut dari kerusakan.</p><p> Untuk menggunakannya, aplikasikan shampo pada rambut yang bersih dan kering, pijat secara merata ke kulit kepala, diamkan selama 15-20 menit (untuk varian pewarna rambut), lalu bilas hingga bersih. </p>
+                        <p style={{ textAlign: 'justify' }}>Shampo Shanas memiliki manfaat untuk membersihkan rambut, menjaga kelembapan, kilau, dan kesehatan rambut, serta menguatkan rambut dari kerusakan.</p>
+                        <p> Untuk menggunakannya, aplikasikan shampo pada rambut yang bersih dan kering, pijat secara merata ke kulit kepala, diamkan selama 15-20 menit (untuk varian pewarna rambut), lalu bilas hingga bersih. </p>
                         <div className="options">
                           <h6>$12</h6>
                           <a href="">
@@ -612,8 +660,10 @@ export default function Produk() {
                       </div>
                       <div className="detail-box">
                         <h5>GRECE Body Crystal Nasa</h5>
-                        <p style={{textAlign: "justify"}}>
-                         Grace Nasa, atau yang dikenal sebagai GRECE Body Crystal Nasa, adalah kristal alami yang digunakan untuk menghilangkan bau badan dengan cara mengusapkannya pada area yang rentan bau seperti ketiak dan sela-sela jari kaki setelah mandi dan mengeringkan tubuh. Cara pakainya adalah dengan membasahi kristal dengan air, kemudian usapkan ke area tubuh yang berbau. </p>
+                        <p style={{ textAlign: 'justify' }}>
+                          Grace Nasa, atau yang dikenal sebagai GRECE Body Crystal Nasa, adalah kristal alami yang digunakan untuk menghilangkan bau badan dengan cara mengusapkannya pada area yang rentan bau seperti ketiak dan sela-sela
+                          jari kaki setelah mandi dan mengeringkan tubuh. Cara pakainya adalah dengan membasahi kristal dengan air, kemudian usapkan ke area tubuh yang berbau.{' '}
+                        </p>
                         <div className="options">
                           <h6>$14</h6>
                           <a href="">
@@ -684,8 +734,11 @@ export default function Produk() {
                       </div>
                       <div className="detail-box">
                         <h5>Lacoco 5% Baquchiol Essence</h5>
-                        <p style={{textAlign:"justify"}}>
-                          Bermanfaat untuk anti-penuaan, anti-jerawat, mencerahkan kulit kusam, dan meratakan warna kulit.</p><p> Cara pakainya adalah dengan menggunakan 2-4 tetes essence ke wajah dan leher yang bersih, pada pagi dan malam hari. Setelahnya, di pagi hari, gunakan tabir surya dan hindari paparan sinar matahari berlebihan. </p>
+                        <p style={{ textAlign: 'justify' }}>Bermanfaat untuk anti-penuaan, anti-jerawat, mencerahkan kulit kusam, dan meratakan warna kulit.</p>
+                        <p>
+                          {' '}
+                          Cara pakainya adalah dengan menggunakan 2-4 tetes essence ke wajah dan leher yang bersih, pada pagi dan malam hari. Setelahnya, di pagi hari, gunakan tabir surya dan hindari paparan sinar matahari berlebihan.{' '}
+                        </p>
                         <div className="options">
                           <h6>$10</h6>
                           <a href="">
@@ -748,7 +801,7 @@ export default function Produk() {
                     </div>
                   </div>
                 </div>
-                              <div className="col-sm-6 col-lg-4 all pizza">
+                <div className="col-sm-6 col-lg-4 all pizza">
                   <div className="box">
                     <div>
                       <div className="img-box">
@@ -756,8 +809,10 @@ export default function Produk() {
                       </div>
                       <div className="detail-box">
                         <h5> Lacoco Grape Serum </h5>
-                        <p style={{ textAlign: "justify" }}>
-                          Masker tidur yang berfungsi untuk mencerahkan, melembapkan, dan mengenyalkan kulit wajah, serta melawan tanda penuaan dini dan memudarkan bekas jerawat. Masker ini diaplikasikan setelah rutinitas perawatan wajah lainnya, dibiarkan semalaman, dan dibilas keesokan paginya untuk mendapatkan kulit yang lebih sehat, cerah, dan kenyal. </p>
+                        <p style={{ textAlign: 'justify' }}>
+                          Masker tidur yang berfungsi untuk mencerahkan, melembapkan, dan mengenyalkan kulit wajah, serta melawan tanda penuaan dini dan memudarkan bekas jerawat. Masker ini diaplikasikan setelah rutinitas perawatan wajah
+                          lainnya, dibiarkan semalaman, dan dibilas keesokan paginya untuk mendapatkan kulit yang lebih sehat, cerah, dan kenyal.{' '}
+                        </p>
                         <div className="options">
                           <h6>$15</h6>
                           <a href="">
@@ -820,7 +875,7 @@ export default function Produk() {
                     </div>
                   </div>
                 </div>
-                                          <div className="col-sm-6 col-lg-4 all pizza">
+                <div className="col-sm-6 col-lg-4 all pizza">
                   <div className="box">
                     <div>
                       <div className="img-box">
@@ -828,8 +883,10 @@ export default function Produk() {
                       </div>
                       <div className="detail-box">
                         <h5>Lacoco Aloe Vera Soothing Mist</h5>
-                        <p style={{ textAlign: "justify" }}>
-                          Bermanfaat untuk membersihkan, melembapkan, dan menenangkan kulit wajah, serta dapat digunakan sebagai alas makeup dan penyegar. Cara pakainya adalah dengan menyemprotkannya langsung ke wajah dari jarak 10-15 cm sebagai toner atau penyegar, atau menyemprotkannya pada kapas lalu mengusapkannya perlahan ke wajah sebagai pembersih. </p>
+                        <p style={{ textAlign: 'justify' }}>
+                          Bermanfaat untuk membersihkan, melembapkan, dan menenangkan kulit wajah, serta dapat digunakan sebagai alas makeup dan penyegar. Cara pakainya adalah dengan menyemprotkannya langsung ke wajah dari jarak 10-15 cm
+                          sebagai toner atau penyegar, atau menyemprotkannya pada kapas lalu mengusapkannya perlahan ke wajah sebagai pembersih.{' '}
+                        </p>
                         <div className="options">
                           <h6>$15</h6>
                           <a href="">
@@ -892,7 +949,7 @@ export default function Produk() {
                     </div>
                   </div>
                 </div>
-                    <div className="col-sm-6 col-lg-4 all pasta">
+                <div className="col-sm-6 col-lg-4 all pasta">
                   <div className="box">
                     <div>
                       <div className="img-box">
@@ -900,8 +957,11 @@ export default function Produk() {
                       </div>
                       <div className="detail-box">
                         <h5>Lacoco Dark Spot Essence </h5>
-                        <p style={{textAlign:"justify"}}>
-                         Manfaat Lacoco Dark Spot Essence antara lain memudarkan flek hitam dan bekas jerawat, mencerahkan kulit, menghaluskan tekstur kulit, serta mengatasi pori-pori tersumbat. </p><p>Cara pakainya adalah setelah toner dan sebelum moisturizer di malam hari, dengan cara diaplikasikan 3-4 tetes ke wajah secara merata, lalu biarkan meresap. Untuk hasil maksimal, gunakan secara rutin 2-3 kali seminggu dan wajib menggunakan sunscreen keesokan harinya. </p>
+                        <p style={{ textAlign: 'justify' }}>Manfaat Lacoco Dark Spot Essence antara lain memudarkan flek hitam dan bekas jerawat, mencerahkan kulit, menghaluskan tekstur kulit, serta mengatasi pori-pori tersumbat. </p>
+                        <p>
+                          Cara pakainya adalah setelah toner dan sebelum moisturizer di malam hari, dengan cara diaplikasikan 3-4 tetes ke wajah secara merata, lalu biarkan meresap. Untuk hasil maksimal, gunakan secara rutin 2-3 kali
+                          seminggu dan wajib menggunakan sunscreen keesokan harinya.{' '}
+                        </p>
                         <div className="options">
                           <h6>$10</h6>
                           <a href="">
@@ -973,7 +1033,7 @@ export default function Produk() {
         </section>
       </div>
 
-       <footer className="footer_section">
+      <footer className="footer_section">
         <div className="container">
           <div className="row">
             <div className="col-md-4 footer-col">

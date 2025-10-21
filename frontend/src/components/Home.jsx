@@ -1,4 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import herBg from '../assets/images/hero-bg.jpg';
 import aboutImg from '../assets/images/about-img.png';
@@ -23,24 +26,6 @@ import client2 from '../assets/images/client2.jpg';
 import Header from './Header';
 import { Link } from 'react-router-dom';
 
-const products = [
-  { id: 1, title: 'Moreskin BodyCare', price: 20, img: f1, category: 'bodycare' },
-  { id: 2, title: 'Moreskin Collaskin Body Lotion', price: 15, img: f2, category: 'bodycare' },
-  { id: 3, title: 'erhsali feeling spray', price: 15, img: f3, category: 'bodycare' },
-  { id: 4, title: 'Moreskin Lotion Mashmallow', price: 15, img: f4, category: 'bodycare' },
-  { id: 5, title: 'Moreskin Body Butter Whitening Gold ', price: 15, img: f5, category: 'bodycare' },
-  { id: 6, title: 'Ory Soap ', price: 15, img: f6, category: 'bodycare' },
-  { id: 8, title: 'Grace ', price: 15, img: f8, category: 'bodycare' },
-  { id: 9, title: 'Dark Spot Easence', price: 17, img: f9, category: 'skincare' },
-  { id: 10, title: 'Water Melon Glow Mask', price: 80, img: f10, category: 'skincare' },
-  { id: 11, title: '5% Baquchiol Essence', price: 80, img: f11, category: 'skincare' },
-  { id: 12, title: 'Aloevera Shooting Face Mist', price: 80, img: f12, category: 'skincare' },
-  { id: 13, title: 'Grape Fruit Acne Fight Serum', price: 80, img: f13, category: 'skincare' },
-  { id: 14, title: 'Hidrating Divine Essence ', price: 80, img: f14, category: 'skincare' },
-  { id: 15, title: 'Amazonian Charcoal Glow Mask', price: 80, img: f15, category: 'skincare' },
-  
-  // tambahkan produk lain sesuai kebutuhan
-];
 const slides = [
   {
     img: client1,
@@ -74,8 +59,44 @@ const heroSlides = [
 export default function Home() {
   const [current, setCurrent] = useState(0);
 
+  const [products, setProducts] = useState([]);
   const [activeFilter, setActiveFilter] = useState('all');
+  const navigate = useNavigate();
 
+  const handleCartClick = (productId) => {
+    const user = JSON.parse(localStorage.getItem('user'));
+    if (!user) {
+      alert('Silakan daftar atau login terlebih dahulu sebelum memesan.');
+      navigate('/LoginUser'); // arahkan ke halaman register
+    } else {
+      navigate(`/CreateOrder/${productId}`); // langsung ke halaman create order
+    }
+  };
+
+  // Ambil data dari backend
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const res = await axios.get('http://localhost:5000/productsCategori'); // sesuai route backend
+        // mapping hasil supaya mudah dipakai
+        const mapped = res.data.map((p) => ({
+          id: p.id,
+          title: p.name,
+          price: p.price,
+          description: p.description,
+          img: `http://localhost:5000/products/${p.photo}`, // <- langsung ambil file statis
+          category: p.Category?.name?.toLowerCase() || 'other',
+        }));
+
+        setProducts(mapped);
+      } catch (err) {
+        console.error('Gagal fetch products:', err);
+      }
+    };
+    fetchProducts();
+  }, []);
+
+  // Filter produk sesuai kategori
   const filteredProducts = activeFilter === 'all' ? products : products.filter((p) => p.category === activeFilter);
 
   // Slide otomatis setiap 3 detik
@@ -88,6 +109,45 @@ export default function Home() {
 
   return (
     <>
+      <style>{`
+        .product-card {
+          display: flex;
+          flex-direction: column;
+          height: 100%;
+          border: 1px solid #eee;
+          border-radius: 10px;
+          overflow: hidden;
+          background: #fff;
+        }
+.product-card .img-box img {
+  width: 100%;
+  height: auto;
+  object-fit: scale-down;
+}
+
+
+        .product-card p {
+          font-family: Arial, sans-serif;
+        }
+
+        .cart-btn {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          background: #FFD700;
+          color: black;
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
+          text-decoration: none;
+          font-size: 18px;
+          transition: 0.3s;
+        }
+
+        .cart-btn:hover {
+          background: #e6c200;
+        }
+      `}</style>
       <div className="hero_area">
         <div
           className="bg-box"
@@ -271,15 +331,16 @@ export default function Home() {
           </div>
         </div>
       </section>
-      <section className="produk_section layout_padding-bottom">
+
+      <section className="food_section layout_padding-bottom">
         <div className="container">
           <div className="heading_container heading_center">
             <h2>Our Product</h2>
           </div>
 
-          <div className="produk-section">
-            {/* Filter Produk */}
-            <ul className="filters_Produk">
+          <div className="product-section">
+            {/* Filter Menu */}
+            <ul className="filters_menu">
               <li className={activeFilter === 'all' ? 'active' : ''} onClick={() => setActiveFilter('all')}>
                 All Product
               </li>
@@ -296,16 +357,29 @@ export default function Home() {
               <div className="row grid">
                 {filteredProducts.map((product) => (
                   <div key={product.id} className={`col-sm-6 col-lg-4 all ${product.category}`}>
-                    <div className="box">
+                    <div className="box product-card">
                       <div className="img-box">
                         <img src={product.img} alt={product.title} />
                       </div>
                       <div className="detail-box">
                         <h5>{product.title}</h5>
-                        <p>Veniam debitis quaerat officiis quasi cupiditate quo, quisquam velit, magnam voluptatem repellendus sed eaque</p>
+                        <p style={{ fontFamily: 'Arial, sans-serif' }}>{product.description || 'Deskripsi belum ada'}</p>
                         <div className="options">
-                          <h6>${product.price}</h6>
-                          <a href="#">🛒</a>
+                          <h6>Rp.{product.price}</h6>
+                          <button
+                            onClick={() => handleCartClick(product.id)}
+                            className="cart-btn"
+                            style={{
+                              backgroundColor: '#ffc107',
+                              borderRadius: '50%',
+                              border: 'none',
+                              padding: '10px 14px',
+                              cursor: 'pointer',
+                              fontSize: '20px',
+                            }}
+                          >
+                            🛒
+                          </button>
                         </div>
                       </div>
                     </div>
@@ -314,6 +388,7 @@ export default function Home() {
               </div>
             </div>
           </div>
+
           <div className="btn-box">
             <a href=""> View More </a>
           </div>
@@ -336,11 +411,11 @@ export default function Home() {
                 <div className="heading_container">
                   <h2>We Are Natural Nusantara</h2>
                 </div>
-                 <p style={{ textAlign: "justify" }}>
-                    PT Natural Nusantara (NASA) adalah perusahaan asli Indonesia yang didirikan pada Oktober 2002 di Yogyakarta, berfokus pada distribusi produk agrokompleks, kesehatan, kosmetik, dan perawatan tubuh berbasis organik dan herbal.
-                    Perusahaan ini memiliki visi untuk mewujudkan hidup yang bahagia dan sejahtera selaras alam, serta berupaya memberdayakan sumber daya alam dan manusia melalui produk yang ramah lingkungan dan karya anak bangsa.
-                    Kantor pusat PT NASA terletak di Jalan Ring Road Barat 72 Salaka, Trihanggo, Gamping, Sleman, Yogyakarta.
-                  </p>
+                <p style={{ textAlign: 'justify' }}>
+                  PT Natural Nusantara (NASA) adalah perusahaan asli Indonesia yang didirikan pada Oktober 2002 di Yogyakarta, berfokus pada distribusi produk agrokompleks, kesehatan, kosmetik, dan perawatan tubuh berbasis organik dan
+                  herbal. Perusahaan ini memiliki visi untuk mewujudkan hidup yang bahagia dan sejahtera selaras alam, serta berupaya memberdayakan sumber daya alam dan manusia melalui produk yang ramah lingkungan dan karya anak bangsa.
+                  Kantor pusat PT NASA terletak di Jalan Ring Road Barat 72 Salaka, Trihanggo, Gamping, Sleman, Yogyakarta.
+                </p>
                 <a href="#">Read More</a>
               </div>
             </div>
@@ -440,7 +515,7 @@ export default function Home() {
         </div>
       </section>
 
-     <footer className="footer_section">
+      <footer className="footer_section">
         <div className="container">
           <div className="row">
             <div className="col-md-4 footer-col">

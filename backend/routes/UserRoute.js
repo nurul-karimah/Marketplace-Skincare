@@ -1,0 +1,14 @@
+import express from "express"
+import { CreateUser, loginUser, createCourier, createShipping, getCourir, getShipping, logoutUser } from "../controllers/UserControllers.js";
+const router = express.Router();
+
+router.post('/user', CreateUser);
+router.post('/LoginUser', loginUser);
+router.post('/courier', createCourier);
+router.post('/shipping', createShipping);
+router.get('/Courier', getCourir);
+router.get('/shipping', getShipping)
+router.delete("/Userlogout", logoutUser);
+
+
+export default router;

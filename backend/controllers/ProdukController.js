@@ -30,7 +30,7 @@ export const createProduct = async (req, res) => {
       });
     });
 
-    const { name, price, description, review, categoryId } = req.body;
+    const { name, price, description, review, categoryId, stok } = req.body;
 
     const product = await Product.create({
       name,
@@ -39,6 +39,7 @@ export const createProduct = async (req, res) => {
       review,
       categoryId,
       photo: fileName,
+      stok,
     });
 
     res.status(201).json(product);
@@ -52,9 +53,17 @@ export const createProduct = async (req, res) => {
 export const getProducts = async (req, res) => {
   try {
     const products = await Product.findAll({
-      include: [{ model: Category, attributes: ["id", "name"] }],
+      include: [{ model: Category, attributes: ["id", "name", "price", "description", "review", "photo"] }],
     });
     res.json(products);
+  } catch (error) {
+    res.status(500).json({ msg: error.message });
+  }
+};
+export const getCategori = async (req, res) => {
+  try {
+    const categori = await Category.findAll();
+    res.json(categori);
   } catch (error) {
     res.status(500).json({ msg: error.message });
   }
@@ -63,16 +72,16 @@ export const getProducts = async (req, res) => {
 // GET Product by ID
 export const getProductById = async (req, res) => {
   try {
-    const product = await Product.findOne({
-      where: { id: req.params.id },
-      include: [{ model: Category, attributes: ["id", "name"] }],
+    const product = await Product.findByPk(req.params.id, {
+      include: [{ model: Category }],
     });
-    if (!product) return res.status(404).json({ msg: "Product not found" });
+    if (!product) return res.status(404).json({ msg: 'Produk tidak ditemukan' });
     res.json(product);
   } catch (error) {
     res.status(500).json({ msg: error.message });
   }
 };
+
 
 // UPDATE Product
 export const updateProduct = async (req, res) => {
@@ -124,6 +133,51 @@ export const deleteProduct = async (req, res) => {
   try {
     await product.destroy();
     res.json({ msg: "Product deleted successfully" });
+  } catch (error) {
+    res.status(500).json({ msg: error.message });
+  }
+};
+
+export const getProductsCategori = async (req, res) => {
+ try {
+    const products = await Product.findAll({
+      include: [
+        {
+          model: Category,
+          attributes: ["id", "name"], // hanya ambil id & name kategori
+        },
+      ],
+    });
+
+    res.status(200).json(products);
+  } catch (error) {
+    res.status(500).json({ msg: error.message });
+  }
+};
+
+export const updateStokProduct = async (req, res) => {
+  try {
+    const { id } = req.params; // ambil id produk dari parameter URL
+    const { stok } = req.body; // ambil stok baru dari body
+
+    if (stok === undefined) {
+      return res.status(400).json({ msg: "Stok harus diisi" });
+    }
+
+    // Cari produk berdasarkan ID
+    const product = await Product.findByPk(id);
+    if (!product) {
+      return res.status(404).json({ msg: "Produk tidak ditemukan" });
+    }
+
+    // Update hanya field stok
+    product.stok = stok;
+    await product.save();
+
+    res.status(200).json({
+      msg: "Stok berhasil diperbarui",
+      product,
+    });
   } catch (error) {
     res.status(500).json({ msg: error.message });
   }

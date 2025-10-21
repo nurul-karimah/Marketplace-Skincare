@@ -1,7 +1,11 @@
 import app from "./app.js";
 import sequelize from "./config/db.js";
-import Category from "./models/KategoriModels.js";
-import Product from "./models/ProdukModels.js";
+import Admin from "./models/AdminModels.js";
+import Courier from "./models/CouriesModels.js";
+import Order from "./models/OrderModel.js";
+import Shipping from "./models/ShippingModels.js";
+import User from "./models/UserModel.js";
+
 
 const PORT = 5000;
 
