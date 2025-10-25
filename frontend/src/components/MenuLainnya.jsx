@@ -19,14 +19,14 @@ export default function MenuLainnya() {
       subtitle: 'Atur wilayah dan biaya pengiriman',
       color: 'success',
       icon: 'bi-truck',
-      route: '/admin/shippings',
+      route: '/DataShipping',
     },
     {
       title: 'Couriers',
       subtitle: 'Kelola data kurir pengantar',
       color: 'warning',
       icon: 'bi-person-badge',
-      route: '/admin/couriers',
+      route: '/DataCourier',
     },
     {
       title: 'Stok Produk',

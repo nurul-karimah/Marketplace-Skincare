@@ -112,6 +112,7 @@ export default function PesananUser() {
                   <th>Jumlah</th>
                   <th>Total</th>
                   <th>Alamat</th>
+                  <th>No Handphone</th>
                   <th>Status</th>
                   <th>Tanggal Pesanan</th>
                 </tr>
@@ -146,6 +147,9 @@ export default function PesananUser() {
                     </td>
                     <td>
                       <small>{order.address}</small>
+                    </td>
+                    <td>
+                      <small>{order.nohandphone}</small>
                     </td>
                     <td>
                       <span className={`badge ${order.status === 'MENUNGGU' ? 'bg-warning text-dark' : order.status === 'DIKIRIM' ? 'bg-primary' : order.status === 'SELESAI' ? 'bg-success' : 'bg-danger'}`}>{order.status}</span>

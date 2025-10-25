@@ -813,6 +813,7 @@ export default function Produk() {
                           Masker tidur yang berfungsi untuk mencerahkan, melembapkan, dan mengenyalkan kulit wajah, serta melawan tanda penuaan dini dan memudarkan bekas jerawat. Masker ini diaplikasikan setelah rutinitas perawatan wajah
                           lainnya, dibiarkan semalaman, dan dibilas keesokan paginya untuk mendapatkan kulit yang lebih sehat, cerah, dan kenyal.{' '}
                         </p>
+
                         <div className="options">
                           <h6>$15</h6>
                           <a href="">
@@ -1085,6 +1086,7 @@ export default function Produk() {
               <h4>Free Konsultasi</h4>
               <p>Everyday</p>
               <p>08.00 Am -10.00 Pm</p>
+              <p>WhatsApp 085-922-133-766</p>
             </div>
           </div>
           <div className="footer-info">

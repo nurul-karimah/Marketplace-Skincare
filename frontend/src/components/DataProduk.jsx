@@ -52,6 +52,7 @@ export default function DataProduk() {
             <th style={{ borderColor: 'black' }}>Nama Produk</th>
             <th style={{ borderColor: 'black' }}>Harga</th>
             <th style={{ borderColor: 'black' }}>Kategori</th>
+            <th style={{ borderColor: 'black' }}>Stok</th>
             <th style={{ borderColor: 'black' }}>Foto Produk</th>
             <th style={{ borderColor: 'black' }}>Aksi</th>
           </tr>
@@ -64,6 +65,7 @@ export default function DataProduk() {
                 <td style={{ borderColor: 'black' }}>{produk.name}</td>
                 <td style={{ borderColor: 'black' }}>Rp {parseFloat(produk.price).toLocaleString('id-ID')}</td>
                 <td style={{ borderColor: 'black' }}>{produk.Category?.name || '-'}</td>
+                <td style={{ borderColor: 'black' }}>{produk.stok}</td>
                 <td style={{ borderColor: 'black' }}>
                   <img
                     src={`http://localhost:5000/Products/${produk.photo}`} // sesuaikan path backend

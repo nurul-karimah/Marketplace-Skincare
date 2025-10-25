@@ -67,6 +67,7 @@ export default function DataPenjualan() {
                   <th>Produk</th>
                   <th>Jumlah</th>
                   <th>Total Harga</th>
+                  <th>No Handphone</th>
                   <th>Status</th>
                   <th>Tanggal</th>
                 </tr>
@@ -79,6 +80,7 @@ export default function DataPenjualan() {
                     <td>{order.Product?.name || '-'}</td>
                     <td>{order.quantity}</td>
                     <td>Rp {order.totalPrice.toLocaleString('id-ID')}</td>
+                    <td>{order.User?.nohandphone || '-'}</td>
                     <td>
                       <select
                         className={`form-select form-select-sm text-center ${
@@ -94,6 +96,7 @@ export default function DataPenjualan() {
                         <option value="DIBATALKAN">DIBATALKAN</option>
                       </select>
                     </td>
+
                     <td>{new Date(order.createdAt).toLocaleString('id-ID')}</td>
                   </tr>
                 ))}

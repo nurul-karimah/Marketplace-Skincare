@@ -18,6 +18,10 @@ import DataPembeliDetail from './components/DataPembeliDetail';
 import DataPesanan from './components/DataPesanan';
 import MenuLainnya from './components/MenuLainnya';
 import UpdateStokForm from './components/UpdateStok';
+import DataCourier from './components/DataCouries';
+import AddCourier from './components/AddCouries';
+import DataShipping from './components/DataShipping';
+import TambahShipping from './components/AddShipping';
 export default function App() {
   return (
     <Routes>
@@ -75,6 +79,38 @@ export default function App() {
         element={
           <DashboardLayout>
             <UpdateStokForm />
+          </DashboardLayout>
+        }
+      />
+      <Route
+        path="/DataCourier"
+        element={
+          <DashboardLayout>
+            <DataCourier />
+          </DashboardLayout>
+        }
+      />
+      <Route
+        path="/AddCourier"
+        element={
+          <DashboardLayout>
+            <AddCourier />
+          </DashboardLayout>
+        }
+      />
+      <Route
+        path="/DataShipping"
+        element={
+          <DashboardLayout>
+            <DataShipping />
+          </DashboardLayout>
+        }
+      />
+      <Route
+        path="/AddShipping"
+        element={
+          <DashboardLayout>
+            <TambahShipping />
           </DashboardLayout>
         }
       />

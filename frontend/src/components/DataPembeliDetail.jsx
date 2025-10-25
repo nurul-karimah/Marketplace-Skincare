@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
-
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 export default function DataPembeliDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
   const [order, setOrder] = useState(null);
+  const [showModal, setShowModal] = useState(false); // kontrol modal
 
   useEffect(() => {
     fetchBuyerDetail();
@@ -33,6 +33,18 @@ export default function DataPembeliDetail() {
     );
   }
 
+  // Fungsi buka modal
+  const handleShowBukti = () => {
+    if (order.paymentMethod === 'COD') {
+      alert('Pesanan ini menggunakan metode COD, jadi tidak ada bukti pembayaran.');
+    } else {
+      setShowModal(true);
+    }
+  };
+
+  // Tutup modal
+  const handleClose = () => setShowModal(false);
+
   return (
     <div
       className="p-4 w-100"
@@ -57,7 +69,6 @@ export default function DataPembeliDetail() {
             </div>
             <div className="col-md-9">
               <h5 className="fw-bold mb-1">{order.User?.nama || '-'}</h5>
-
               <p className="mb-0">
                 <strong>Alamat:</strong> {order.address || '-'}
               </p>
@@ -94,6 +105,13 @@ export default function DataPembeliDetail() {
                 <li className="list-group-item">
                   <strong>Kurir:</strong> {order.Courier?.name || '-'}
                 </li>
+                <li className="list-group-item">
+                  <strong>Metode Pembayaran:</strong> {order.paymentMethod || '-'}
+                  <br />
+                  <button className="btn btn-sm btn-primary mt-2" onClick={handleShowBukti}>
+                    Lihat Bukti Pembayaran
+                  </button>
+                </li>
               </ul>
             </div>
 
@@ -113,6 +131,40 @@ export default function DataPembeliDetail() {
           </div>
         </div>
       </div>
+
+      {/* === Modal Bukti Pembayaran === */}
+      {showModal && (
+        <div className="modal fade show" style={{ display: 'block', backgroundColor: 'rgba(0,0,0,0.5)' }}>
+          <div className="modal-dialog modal-dialog-centered">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title">Bukti Pembayaran</h5>
+                <button type="button" className="btn-close" onClick={handleClose}></button>
+              </div>
+              <div className="modal-body text-center">
+                {order.buktiPembayaran ? (
+                  <>
+                    <img src={`http://localhost:5000/pembayaran/${order.buktiPembayaran}`} alt="Bukti Pembayaran" className="img-fluid rounded shadow-sm mb-3" style={{ maxHeight: '300px' }} />
+                    <p>
+                      <strong>Nama Bank:</strong> {order.namaBank || '-'}
+                    </p>
+                    <p>
+                      <strong>No. Rekening:</strong> {order.noRekening || '-'}
+                    </p>
+                  </>
+                ) : (
+                  <p>Tidak ada bukti pembayaran yang diunggah.</p>
+                )}
+              </div>
+              <div className="modal-footer">
+                <button className="btn btn-secondary" onClick={handleClose}>
+                  Tutup
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
