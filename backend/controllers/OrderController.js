@@ -1,4 +1,5 @@
 // controllers/OrderController.js
+import path from "path"
 import Order from "../models/OrderModel.js";
 import User from "../models/UserModel.js";
 import Product from "../models/ProdukModels.js";
@@ -7,36 +8,41 @@ import Courier from "../models/CouriesModels.js";
 
 export const createOrder = async (req, res) => {
   try {
-    const { userId, productId, shippingId, courierId, quantity, paymentMethod } = req.body;
+    const {
+      userId,
+      productId,
+      shippingId,
+      courierId,
+      quantity,
+      paymentMethod,
+      namaBank,
+      noRekening,
+    } = req.body;
 
-    // ✅ Ambil data user
+    // ✅ Cek user
     const user = await User.findByPk(userId);
     if (!user) return res.status(404).json({ msg: "User tidak ditemukan" });
 
-    // ✅ Ambil data produk
+    // ✅ Cek produk
     const product = await Product.findByPk(productId);
     if (!product) return res.status(404).json({ msg: "Produk tidak ditemukan" });
 
-    // ✅ Cek stok tersedia atau tidak
-    if (product.stok <= 0) {
-      return res.status(400).json({ msg: "Stok produk habis, tidak dapat dipesan." });
-    }
+    // ✅ Cek stok
+    if (product.stok <= 0)
+      return res.status(400).json({ msg: "Stok produk habis" });
 
-    // ✅ Cek apakah jumlah pesanan melebihi stok
-    if (quantity > product.stok) {
-      return res.status(400).json({ msg: `Stok produk tidak mencukupi. Stok tersisa ${product.stok}` });
-    }
+    if (quantity > product.stok)
+      return res.status(400).json({ msg: `Stok tidak cukup (${product.stok})` });
 
-    // ✅ Ambil data ongkir
+    // ✅ Cek ongkir
     const shipping = await Shipping.findByPk(shippingId);
     if (!shipping) return res.status(404).json({ msg: "Data ongkir tidak ditemukan" });
 
     // ✅ Hitung total harga
-    const productPrice = parseFloat(product.price);
-    const shippingPrice = parseFloat(shipping.cost);
-    const totalPrice = productPrice * quantity + shippingPrice;
+    const totalPrice =
+      parseFloat(product.price) * quantity + parseFloat(shipping.cost);
 
-    // ✅ Gabungkan alamat user
+    // ✅ Gabung alamat user
     const fullAddress = `
       ${user.alamatLengkap}, RT ${user.rt}/RW ${user.rw}, 
       Kel. ${user.kelurahan}, Kec. ${user.kecamatan}, 
@@ -47,7 +53,41 @@ export const createOrder = async (req, res) => {
     product.stok -= quantity;
     await product.save();
 
-    // ✅ Simpan order
+    // --- ⚙️ Upload bukti pembayaran jika metode transfer ---
+    let buktiPembayaranFile = null;
+
+    if (paymentMethod === "TRANSFER") {
+      if (!req.files || !req.files.buktiPembayaran) {
+        return res
+          .status(400)
+          .json({ msg: "Bukti pembayaran wajib diupload untuk metode transfer." });
+      }
+
+      const file = req.files.buktiPembayaran;
+      const fileSize = file.data.length;
+      const ext = path.extname(file.name);
+      const fileName = file.md5 + ext;
+      const allowedTypes = [".png", ".jpg", ".jpeg"];
+
+      if (!allowedTypes.includes(ext.toLowerCase())) {
+        return res.status(422).json({ msg: "Format gambar tidak valid" });
+      }
+      if (fileSize > 5000000) {
+        return res.status(422).json({ msg: "File terlalu besar (< 5 MB)" });
+      }
+
+      // Simpan ke folder public/pembayaran
+      await new Promise((resolve, reject) => {
+        file.mv(`./public/pembayaran/${fileName}`, (err) => {
+          if (err) reject(err);
+          else resolve();
+        });
+      });
+
+      buktiPembayaranFile = fileName;
+    }
+
+    // ✅ Simpan order ke database
     const order = await Order.create({
       userId,
       productId,
@@ -57,11 +97,14 @@ export const createOrder = async (req, res) => {
       paymentMethod,
       address: fullAddress,
       totalPrice,
-      status: "MENUNGGU", // default
+      status: "MENUNGGU",
+      buktiPembayaran: buktiPembayaranFile,
+      namaBank: namaBank || null,
+      noRekening: noRekening || null,
     });
 
     res.status(201).json({
-      msg: "Pesanan berhasil dibuat dan stok produk telah diperbarui.",
+      msg: "Pesanan berhasil dibuat.",
       order,
     });
   } catch (error) {
@@ -69,6 +112,8 @@ export const createOrder = async (req, res) => {
     res.status(500).json({ msg: error.message });
   }
 };
+
+
 
 export const getOrdersByUserId = async (req, res) => {
   try {
@@ -91,7 +136,7 @@ export const getOrdersByUserId = async (req, res) => {
         },
         {
           model: User,
-          attributes: ['nama', 'alamatLengkap', 'kota'], // sesuaikan nama kolom di DB-mu
+          attributes: ['nama', 'alamatLengkap', 'kota', 'nohandphone'], // sesuaikan nama kolom di DB-mu
         }
       ],
       order: [['createdAt', 'DESC']],
@@ -207,11 +252,11 @@ export const getBuyerByOrderId = async (req, res) => {
       include: [
         {
           model: User,
-          attributes: ["id", "nama", "username","alamatLengkap", "rt_rw", "kelurahan", "kecamatan", "kota", "foto"],
+          attributes: ["id", "nama", "username","alamatLengkap", "rt_rw", "kelurahan", "kecamatan", "kota", "foto", "nohandphone"],
         },
         {
           model: Product,
-          attributes: ["id", "name", "price", "photo"],
+          attributes: ["id", "name", "price", "photo", "stok"],
         },
         {
           model: Shipping,
@@ -238,7 +283,7 @@ export const getOrder = async (req, res) => {
   try {
     const orders = await Order.findAll({
       include: [
-        { model: User, attributes: ["nama", "username"] },
+        { model: User, attributes: ["nama", "username", "nohandphone"] },
         { model: Product, attributes: ["name", "price"] },
         { model: Shipping, attributes: ["region", "cost"] },
         { model: Courier, attributes: ["name"] },

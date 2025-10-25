@@ -4,9 +4,9 @@ const router = express.Router();
 
 router.post('/user', CreateUser);
 router.post('/LoginUser', loginUser);
-router.post('/courier', createCourier);
 router.post('/shipping', createShipping);
 router.get('/Courier', getCourir);
+router.post('/Courier', createCourier);
 router.get('/shipping', getShipping)
 router.delete("/Userlogout", logoutUser);
 

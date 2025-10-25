@@ -6,7 +6,6 @@ import Product from "./ProdukModels.js";
 import Shipping from "./ShippingModels.js";
 import Courier from "./CouriesModels.js";
 
-
 const Order = sequelize.define(
   "Order",
   {
@@ -23,14 +22,29 @@ const Order = sequelize.define(
       type: DataTypes.ENUM("COD", "TRANSFER"),
       allowNull: false,
     },
-  status: {
-  type: DataTypes.ENUM("MENUNGGU", "DIBAYAR", "DIKIRIM", "SELESAI"),
-  defaultValue: "MENUNGGU",
-},
-
+    status: {
+      type: DataTypes.ENUM("MENUNGGU", "DIBAYAR", "DIKIRIM", "SELESAI"),
+      defaultValue: "MENUNGGU",
+    },
     totalPrice: {
       type: DataTypes.DECIMAL(10, 2),
       allowNull: false,
+    },
+
+    // 🧾 Bukti pembayaran (opsional, hanya untuk metode transfer)
+    buktiPembayaran: {
+      type: DataTypes.STRING, // bisa simpan URL / path file
+      allowNull: true,
+    },
+
+    // 🏦 Informasi Bank Tujuan
+    namaBank: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    noRekening: {
+      type: DataTypes.STRING,
+      allowNull: true,
     },
   },
   {

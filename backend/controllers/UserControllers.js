@@ -100,6 +100,19 @@ export const createCourier = async(req, res)=>{
     res.status(500).json({msg: error.message});
   }
 }
+// 📦 Ambil semua data Courier
+export const getAllCourier = async (req, res) => {
+  try {
+    const couriers = await Courier.findAll({
+      order: [['createdAt', 'DESC']], // urut dari terbaru
+    });
+    res.status(200).json(couriers);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ msg: "Gagal mengambil data courier" });
+  }
+};
+
 export const createShipping = async(req, res)=>{
   try {
     const {region, cost} = req.body;
