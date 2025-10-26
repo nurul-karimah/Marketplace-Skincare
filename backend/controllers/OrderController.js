@@ -1,5 +1,6 @@
 // controllers/OrderController.js
 import path from "path"
+import fs from "fs"
 import Order from "../models/OrderModel.js";
 import User from "../models/UserModel.js";
 import Product from "../models/ProdukModels.js";
@@ -332,3 +333,66 @@ export const updateOrderStatus = async (req, res) => {
     res.status(500).json({ msg: error.message });
   }
 };
+
+export const updateOrderCOD = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    // ✅ Ambil order
+    const order = await Order.findByPk(id);
+    if (!order) return res.status(404).json({ msg: "Order tidak ditemukan" });
+
+    if (order.paymentMethod !== "COD") {
+      return res.status(400).json({ msg: "Metode pembayaran bukan COD" });
+    }
+
+    const namaBank = "COD (Tidak Ada Bank)";
+    const noRekening = "0";
+    const status = "SELESAI";
+    let buktiPembayaranFile = order.buktiPembayaran;
+
+    // ✅ Upload bukti foto
+    if (req.files && req.files.buktiPembayaran) {
+      const file = req.files.buktiPembayaran;
+      const ext = path.extname(file.name);
+      const fileName = file.md5 + ext;
+      const allowedTypes = [".png", ".jpg", ".jpeg"];
+
+      if (!allowedTypes.includes(ext.toLowerCase())) {
+        return res.status(422).json({ msg: "Format gambar tidak valid" });
+      }
+
+      if (file.data.length > 5000000) {
+        return res.status(422).json({ msg: "File terlalu besar (< 5 MB)" });
+      }
+
+      await new Promise((resolve, reject) => {
+        file.mv(`./public/pembayaran/${fileName}`, (err) => {
+          if (err) reject(err);
+          else resolve();
+        });
+      });
+
+      buktiPembayaranFile = fileName;
+    } else {
+      return res.status(400).json({ msg: "Bukti penerimaan wajib diupload" });
+    }
+
+    // ✅ Update
+    order.buktiPembayaran = buktiPembayaranFile;
+    order.namaBank = namaBank;
+    order.noRekening = noRekening;
+    order.status = status;
+
+    await order.save();
+
+    res.status(200).json({
+      msg: "Bukti penerimaan produk COD berhasil diupload dan status pesanan diselesaikan.",
+      order,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ msg: error.message });
+  }
+};
+
