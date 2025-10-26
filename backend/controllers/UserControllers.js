@@ -100,6 +100,26 @@ export const createCourier = async(req, res)=>{
     res.status(500).json({msg: error.message});
   }
 }
+
+export const deleteCourier = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    // Cek apakah data kurir ada
+    const courier = await Courier.findByPk(id);
+    if (!courier) {
+      return res.status(404).json({ msg: "Courier tidak ditemukan" });
+    }
+
+    // Hapus data kurir
+    await courier.destroy();
+
+    res.status(200).json({ msg: "Courier berhasil dihapus" });
+  } catch (error) {
+    res.status(500).json({ msg: error.message });
+  }
+};
+
 // 📦 Ambil semua data Courier
 export const getAllCourier = async (req, res) => {
   try {
@@ -147,3 +167,22 @@ export const getShipping = async(req, res)=>{
     
   }
 }
+
+export const deleteShippings = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    // Cek apakah data kurir ada
+    const shipping = await Shipping.findByPk(id);
+    if (!shipping) {
+      return res.status(404).json({ msg: "Courier tidak ditemukan" });
+    }
+
+    // Hapus data kurir
+    await shipping.destroy();
+
+    res.status(200).json({ msg: "Courier berhasil dihapus" });
+  } catch (error) {
+    res.status(500).json({ msg: error.message });
+  }
+};

@@ -8,6 +8,8 @@ export default function DataCourier() {
   const [couriers, setCouriers] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  const [message, setMessage] = useState('');
+
   useEffect(() => {
     fetchCouriers();
   }, []);
@@ -22,6 +24,24 @@ export default function DataCourier() {
       setLoading(false);
     }
   };
+  // Hapus data kurir
+  const handleDelete = async (id) => {
+    if (window.confirm('Apakah kamu yakin ingin menghapus courier ini?')) {
+      try {
+        await axios.delete(`http://localhost:5000/deleteCourier/${id}`);
+        setMessage('Courier berhasil dihapus ✅');
+
+        // Hapus data dari state tanpa reload
+        setCouriers(couriers.filter((item) => item.id !== id));
+
+        // Hapus pesan notifikasi setelah 3 detik
+        setTimeout(() => setMessage(''), 3000);
+      } catch (error) {
+        console.error(error);
+        alert('Gagal menghapus courier ❌');
+      }
+    }
+  };
 
   return (
     <div className="container mt-5">
@@ -31,6 +51,12 @@ export default function DataCourier() {
           ➕ Tambah Courier
         </button>
       </div>
+      {/* ✅ Notifikasi Bootstrap */}
+      {message && (
+        <div className="alert alert-success text-center" role="alert">
+          {message}
+        </div>
+      )}
 
       {loading ? (
         <p className="text-center text-muted">Memuat data...</p>
@@ -52,6 +78,11 @@ export default function DataCourier() {
                   <td>{index + 1}</td>
                   <td className="fw-semibold">{courier.name}</td>
                   <td>{new Date(courier.createdAt).toLocaleString('id-ID')}</td>
+                  <td>
+                    <button onClick={() => handleDelete(courier.id)} className="btn btn-danger btn-sm">
+                      Hapus
+                    </button>
+                  </td>
                 </tr>
               ))}
             </tbody>
