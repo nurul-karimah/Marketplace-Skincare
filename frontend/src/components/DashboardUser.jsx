@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 export default function DashboardUser() {
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+
   const navigate = useNavigate();
   const [orders, setOrders] = useState([]);
   const [stats, setStats] = useState({
@@ -52,13 +54,29 @@ export default function DashboardUser() {
   return (
     <div className="d-flex" style={{ minHeight: '100vh' }}>
       {/* Sidebar */}
-      <div className="bg-dark text-white d-flex flex-column p-3" style={{ width: '250px', position: 'fixed', height: '100%' }}>
-        {/* Tombol Logout di atas */}
+      <div
+        className={`sidebar bg-dark text-white d-flex flex-column p-3 position-fixed h-100`}
+        style={{
+          width: '250px',
+          top: 0,
+          left: sidebarOpen ? '0' : '-250px',
+          transition: 'left 0.3s ease',
+          zIndex: 1050,
+        }}
+      >
+        {/* Header Sidebar */}
         <div className="d-flex justify-content-between align-items-center mb-4">
           <h4 className="fw-bold m-0">Natura</h4>
-          <button className="btn btn-outline-light btn-sm" onClick={handleLogout} title="Logout">
-            <i className="bi bi-box-arrow-right"></i> Logout
-          </button>
+
+          {/* Tombol Close hanya muncul di mobile */}
+          <div className="d-flex align-items-center">
+            <button className="btn btn-outline-light btn-sm me-2 d-md-none" onClick={() => setSidebarOpen(false)}>
+              ✖
+            </button>
+            <button className="btn btn-outline-light btn-sm" onClick={handleLogout} title="Logout">
+              <i className="bi bi-box-arrow-right"></i> Logout
+            </button>
+          </div>
         </div>
 
         {/* Menu Navigasi */}
@@ -83,11 +101,9 @@ export default function DashboardUser() {
         {/* Bagian bawah sidebar */}
         <div className="mt-auto text-center">
           <hr className="border-secondary" />
-
-          {/* 🔹 Tombol Kembali ke Halaman Pembelian */}
           <a
             href="/"
-            className="btn btn-light w-100 fw-bold mb-3"
+            className="btn w-100 fw-bold mb-3"
             style={{
               backgroundColor: '#f78da7',
               border: 'none',
@@ -99,19 +115,48 @@ export default function DashboardUser() {
           >
             🛒 Kembali ke Pembelian
           </a>
-
           <small>© {new Date().getFullYear()} Natural Nusantara</small>
         </div>
       </div>
 
+      {/* Tombol toggle sidebar di mobile */}
+      <button
+        className="btn btn-dark d-md-none position-fixed"
+        style={{
+          top: '15px',
+          left: '15px',
+          zIndex: 1100,
+          borderRadius: '50%',
+          width: '45px',
+          height: '45px',
+        }}
+        onClick={() => setSidebarOpen(!sidebarOpen)}
+      >
+        ☰
+      </button>
+
+      {/* Overlay (muncul di mobile saat sidebar terbuka) */}
+      {sidebarOpen && (
+        <div
+          className="overlay d-md-none"
+          style={{
+            position: 'fixed',
+            inset: 0,
+            background: 'rgba(0, 0, 0, 0.4)',
+            zIndex: 1040,
+          }}
+          onClick={() => setSidebarOpen(false)}
+        ></div>
+      )}
+
       {/* Konten utama */}
-      <div className="flex-grow-1" style={{ marginLeft: '250px' }}>
+      <div className="main-content flex-grow-1" style={{ marginLeft: '250px' }}>
         <div className="container py-5">
           <h2 className="text-center fw-bold mb-5">User Dashboard</h2>
 
           <div className="row g-4">
             {/* Total Orders */}
-            <div className="col-md-3">
+            <div className="col-6 col-md-3">
               <div className="card shadow-sm border-0 text-center p-4" style={{ borderRadius: '15px' }}>
                 <h5 className="fw-semibold text-secondary">Total Orders</h5>
                 <h2 className="fw-bold text-primary">{stats.total}</h2>
@@ -119,7 +164,7 @@ export default function DashboardUser() {
             </div>
 
             {/* Menunggu */}
-            <div className="col-md-3">
+            <div className="col-6 col-md-3">
               <div className="card shadow-sm border-0 text-center p-4" style={{ borderRadius: '15px' }}>
                 <h5 className="fw-semibold text-secondary">Menunggu</h5>
                 <h2 className="fw-bold text-warning">{stats.menunggu}</h2>
@@ -127,7 +172,7 @@ export default function DashboardUser() {
             </div>
 
             {/* Dikirim */}
-            <div className="col-md-3">
+            <div className="col-6 col-md-3">
               <div className="card shadow-sm border-0 text-center p-4" style={{ borderRadius: '15px' }}>
                 <h5 className="fw-semibold text-secondary">Dikirim</h5>
                 <h2 className="fw-bold text-info">{stats.dikirim}</h2>
@@ -135,7 +180,7 @@ export default function DashboardUser() {
             </div>
 
             {/* Selesai */}
-            <div className="col-md-3">
+            <div className="col-6 col-md-3">
               <div className="card shadow-sm border-0 text-center p-4" style={{ borderRadius: '15px' }}>
                 <h5 className="fw-semibold text-secondary">Selesai</h5>
                 <h2 className="fw-bold text-success">{stats.selesai}</h2>
@@ -148,6 +193,29 @@ export default function DashboardUser() {
           </div>
         </div>
       </div>
+
+      {/* CSS Responsif */}
+      <style>
+        {`
+          @media (max-width: 768px) {
+            .main-content {
+              margin-left: 0 !important;
+            }
+            .sidebar {
+              left: -250px;
+            }
+            .sidebar.show {
+              left: 0;
+            }
+          }
+
+          @media (min-width: 769px) {
+            .sidebar {
+              left: 0 !important;
+            }
+          }
+        `}
+      </style>
     </div>
   );
 }

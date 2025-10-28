@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 export default function RiwayatPembelian() {
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedOrder, setSelectedOrder] = useState(null);
@@ -91,18 +92,33 @@ export default function RiwayatPembelian() {
       alert(error.response?.data?.msg || 'Gagal upload bukti COD.');
     }
   };
+  const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
 
   return (
-    <div className="d-flex" style={{ minHeight: '100vh' }}>
-      {/* 🔹 Sidebar */}
-      <div className="bg-dark text-white d-flex flex-column p-3" style={{ width: '250px', position: 'fixed', height: '100%' }}>
+    <div className="d-flex" style={{ minHeight: '100vh', overflowX: 'hidden' }}>
+      {/* 🔹 SIDEBAR */}
+      <div
+        className={`bg-dark text-white d-flex flex-column p-3 ${sidebarOpen ? 'active' : ''}`}
+        style={{
+          width: '250px',
+          position: window.innerWidth >= 992 ? 'relative' : 'fixed',
+          height: '100vh',
+          top: 0,
+          left: sidebarOpen || window.innerWidth >= 992 ? '0' : '-250px',
+          transition: 'left 0.3s ease',
+          zIndex: 1000,
+          flexShrink: 0,
+        }}
+      >
+        {/* Header Sidebar */}
         <div className="d-flex justify-content-between align-items-center mb-4">
           <h4 className="fw-bold m-0">Natura</h4>
-          <button className="btn btn-outline-light btn-sm" onClick={handleLogout}>
-            <i className="bi bi-box-arrow-right"></i> Logout
+          <button className="btn btn-outline-light btn-sm d-none d-lg-block" onClick={handleLogout}>
+            <i className="bi bi-box-arrow-right"></i>
           </button>
         </div>
 
+        {/* Navigasi */}
         <ul className="nav flex-column mt-3">
           <li className="nav-item mb-2">
             <a href="/User" className="nav-link text-white">
@@ -121,17 +137,40 @@ export default function RiwayatPembelian() {
           </li>
         </ul>
 
+        {/* Footer Sidebar */}
         <div className="mt-auto text-center">
           <hr className="border-secondary" />
-          <a href="/" className="btn btn-light w-100 fw-bold mb-3" style={{ backgroundColor: '#f78da7', border: 'none', color: 'white' }}>
+          <a
+            href="/"
+            className="btn w-100 fw-bold mb-3"
+            style={{
+              backgroundColor: '#f78da7',
+              border: 'none',
+              color: 'white',
+              transition: '0.3s',
+            }}
+            onMouseOver={(e) => (e.target.style.backgroundColor = '#ec4899')}
+            onMouseOut={(e) => (e.target.style.backgroundColor = '#f78da7')}
+          >
             🛒 Kembali ke Pembelian
           </a>
           <small>© {new Date().getFullYear()} Natural Nusantara</small>
         </div>
       </div>
 
-      {/* 🔹 Konten utama */}
-      <div className="container py-4" style={{ marginLeft: '260px', flex: 1 }}>
+      {/* 🔹 KONTEN UTAMA */}
+      <div
+        className="flex-grow-1 py-4 px-3 px-lg-5"
+        style={{
+          background: 'linear-gradient(to bottom right, #fff0f6, #ffffff)',
+          transition: 'margin-left 0.3s ease',
+        }}
+      >
+        {/* Tombol Toggle Sidebar (hanya tampil di HP) */}
+        <button className="btn btn-outline-dark d-lg-none mb-3" onClick={toggleSidebar}>
+          <i className="bi bi-list"></i> Menu
+        </button>
+
         <h3 className="mb-4 fw-bold text-center text-dark">🧾 Riwayat Pembelian</h3>
 
         {loading ? (
@@ -141,9 +180,17 @@ export default function RiwayatPembelian() {
         ) : (
           <div className="row">
             {orders.map((order) => (
-              <div key={order.id} className="col-md-6 col-lg-4 mb-4">
+              <div key={order.id} className="col-12 col-md-6 col-lg-4 mb-4">
                 <div className="card shadow-sm border-0 rounded-4 h-100">
-                  <img src={`http://localhost:5000/products/${order.Product.photo}`} className="card-img-top rounded-top-4" alt={order.Product.name} style={{ height: '200px', objectFit: 'cover' }} />
+                  <img
+                    src={`http://localhost:5000/products/${order.Product.photo}`}
+                    className="card-img-top rounded-top-4"
+                    alt={order.Product.name}
+                    style={{
+                      height: '200px',
+                      objectFit: 'cover',
+                    }}
+                  />
                   <div className="card-body">
                     <h5 className="card-title fw-bold">{order.Product.name}</h5>
                     <p className="card-text mb-1">
@@ -171,28 +218,24 @@ export default function RiwayatPembelian() {
                       <strong>Tanggal:</strong> {new Date(order.createdAt).toLocaleString('id-ID')}
                     </p>
 
-                    {/* 🔹 Kondisi tombol sesuai metode & status */}
+                    {/* Tombol aksi */}
                     {order.status === 'SELESAI' ? (
                       order.paymentMethod === 'COD' ? (
                         order.buktiPembayaran ? (
-                          // ✅ Jika COD dan sudah upload bukti -> tampilkan tombol Hapus Riwayat
                           <button className="btn btn-danger w-100 mt-2" onClick={() => handleDelete(order.id)}>
                             🗑️ Hapus Riwayat
                           </button>
                         ) : (
-                          // ✅ Jika COD dan belum upload bukti -> tampilkan tombol Upload Bukti
                           <button className="btn btn-success w-100 mt-2" onClick={() => setSelectedOrder(order)}>
                             📷 Upload Bukti Pesanan Diterima
                           </button>
                         )
                       ) : (
-                        // ✅ Jika metode TRANSFER dan status SELESAI -> tampilkan tombol Hapus Riwayat
                         <button className="btn btn-danger w-100 mt-2" onClick={() => handleDelete(order.id)}>
                           🗑️ Hapus Riwayat
                         </button>
                       )
                     ) : (
-                      // ✅ Jika belum selesai, tetap tombol Batalkan Pesanan
                       <button className="btn btn-danger w-100 mt-2" onClick={() => handleDelete(order.id)}>
                         🗑️ Batalkan Pesanan
                       </button>
@@ -204,6 +247,9 @@ export default function RiwayatPembelian() {
           </div>
         )}
       </div>
+
+      {/* 🔹 Backdrop (untuk HP) */}
+      {sidebarOpen && <div className="position-fixed top-0 start-0 w-100 h-100 bg-dark bg-opacity-50 d-lg-none" style={{ zIndex: 999 }} onClick={toggleSidebar}></div>}
 
       {/* 🔹 Modal Upload COD */}
       {selectedOrder && (

@@ -3,6 +3,9 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 export default function PesananUser() {
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -40,12 +43,23 @@ export default function PesananUser() {
   return (
     <div className="d-flex">
       {/* ========== SIDEBAR ========== */}
-      <div className="bg-dark text-white d-flex flex-column p-3" style={{ width: '250px', position: 'fixed', height: '100%' }}>
-        {/* Tombol Logout di atas */}
+      <div
+        className={`bg-dark text-white d-flex flex-column p-3 ${sidebarOpen ? 'active' : ''}`}
+        style={{
+          width: '250px',
+          position: 'fixed',
+          height: '100%',
+          top: 0,
+          left: sidebarOpen ? '0' : '-250px',
+          transition: 'all 0.3s ease',
+          zIndex: 1000,
+        }}
+      >
+        {/* Header Sidebar */}
         <div className="d-flex justify-content-between align-items-center mb-4">
           <h4 className="fw-bold m-0">Natura</h4>
           <button className="btn btn-outline-light btn-sm" onClick={handleLogout} title="Logout">
-            <i className="bi bi-box-arrow-right"></i> Logout
+            <i className="bi bi-box-arrow-right"></i>
           </button>
         </div>
 
@@ -68,14 +82,12 @@ export default function PesananUser() {
           </li>
         </ul>
 
-        {/* Bagian bawah sidebar */}
+        {/* Footer Sidebar */}
         <div className="mt-auto text-center">
           <hr className="border-secondary" />
-
-          {/* 🔹 Tombol Kembali ke Halaman Pembelian */}
           <a
             href="/"
-            className="btn btn-light w-100 fw-bold mb-3"
+            className="btn w-100 fw-bold mb-3"
             style={{
               backgroundColor: '#f78da7',
               border: 'none',
@@ -87,13 +99,24 @@ export default function PesananUser() {
           >
             🛒 Kembali ke Pembelian
           </a>
-
           <small>© {new Date().getFullYear()} Natural Nusantara</small>
         </div>
       </div>
 
-      {/* ========== KONTEN PESANAN ========== */}
-      <div className="container-fluid" style={{ marginLeft: '270px', padding: '20px' }}>
+      {/* ========== KONTEN ========== */}
+      <div
+        className="container-fluid"
+        style={{
+          marginLeft: window.innerWidth > 992 ? '270px' : '0',
+          padding: '20px',
+          transition: 'margin 0.3s ease',
+        }}
+      >
+        {/* Tombol toggle sidebar di layar kecil */}
+        <button className="btn btn-outline-dark d-lg-none mb-3" onClick={toggleSidebar}>
+          <i className="bi bi-list"></i> Menu
+        </button>
+
         <h3 className="mb-4 text-center">📦 Pesanan Anda</h3>
 
         {loading ? (
@@ -103,7 +126,7 @@ export default function PesananUser() {
         ) : (
           <div className="table-responsive">
             <table className="table table-striped table-bordered align-middle shadow-sm">
-              <thead className="table-dark">
+              <thead className="table-dark text-center">
                 <tr>
                   <th>No</th>
                   <th>Produk</th>
@@ -112,15 +135,15 @@ export default function PesananUser() {
                   <th>Jumlah</th>
                   <th>Total</th>
                   <th>Alamat</th>
-                  <th>No Handphone</th>
+                  <th>No HP</th>
                   <th>Status</th>
-                  <th>Tanggal Pesanan</th>
+                  <th>Tanggal</th>
                 </tr>
               </thead>
               <tbody>
                 {orders.map((order, i) => (
                   <tr key={order.id}>
-                    <td>{i + 1}</td>
+                    <td className="text-center">{i + 1}</td>
                     <td>
                       <div className="d-flex align-items-center">
                         <img
@@ -151,7 +174,7 @@ export default function PesananUser() {
                     <td>
                       <small>{order.nohandphone}</small>
                     </td>
-                    <td>
+                    <td className="text-center">
                       <span className={`badge ${order.status === 'MENUNGGU' ? 'bg-warning text-dark' : order.status === 'DIKIRIM' ? 'bg-primary' : order.status === 'SELESAI' ? 'bg-success' : 'bg-danger'}`}>{order.status}</span>
                     </td>
                     <td>{new Date(order.createdAt).toLocaleString('id-ID')}</td>
@@ -162,6 +185,9 @@ export default function PesananUser() {
           </div>
         )}
       </div>
+
+      {/* BACKDROP untuk layar kecil */}
+      {sidebarOpen && <div className="position-fixed top-0 start-0 w-100 h-100 bg-dark bg-opacity-50 d-lg-none" style={{ zIndex: 999 }} onClick={toggleSidebar}></div>}
     </div>
   );
 }
