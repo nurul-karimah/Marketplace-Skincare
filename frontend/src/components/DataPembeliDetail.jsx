@@ -7,7 +7,8 @@ export default function DataPembeliDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
   const [order, setOrder] = useState(null);
-  const [showModal, setShowModal] = useState(false); // kontrol modal
+  const [showModal, setShowModal] = useState(false);
+  const [modalContent, setModalContent] = useState(null); // untuk isi modal
 
   useEffect(() => {
     fetchBuyerDetail();
@@ -33,16 +34,31 @@ export default function DataPembeliDetail() {
     );
   }
 
-  // Fungsi buka modal
+  // === 🔹 Fungsi buka modal bukti ===
   const handleShowBukti = () => {
     if (order.paymentMethod === 'COD') {
-      alert('Pesanan ini menggunakan metode COD, jadi tidak ada bukti pembayaran.');
+      if (order.status === 'SELESAI') {
+        // tampilkan bukti COD
+        setModalContent({
+          type: 'COD',
+          image: order.buktiPembayaran,
+        });
+        setShowModal(true);
+      } else {
+        alert('Pesanan belum selesai, belum ada bukti pesanan sampai.');
+      }
     } else {
+      // tampilkan bukti transfer
+      setModalContent({
+        type: 'TRANSFER',
+        image: order.buktiPembayaran,
+        namaBank: order.namaBank,
+        noRekening: order.noRekening,
+      });
       setShowModal(true);
     }
   };
 
-  // Tutup modal
   const handleClose = () => setShowModal(false);
 
   return (
@@ -132,28 +148,32 @@ export default function DataPembeliDetail() {
         </div>
       </div>
 
-      {/* === Modal Bukti Pembayaran === */}
+      {/* === Modal Bukti Pembayaran / COD === */}
       {showModal && (
         <div className="modal fade show" style={{ display: 'block', backgroundColor: 'rgba(0,0,0,0.5)' }}>
           <div className="modal-dialog modal-dialog-centered">
             <div className="modal-content">
               <div className="modal-header">
-                <h5 className="modal-title">Bukti Pembayaran</h5>
+                <h5 className="modal-title">{modalContent?.type === 'COD' ? 'Bukti Pesanan COD' : 'Bukti Pembayaran Transfer'}</h5>
                 <button type="button" className="btn-close" onClick={handleClose}></button>
               </div>
               <div className="modal-body text-center">
-                {order.buktiPembayaran ? (
+                {modalContent?.image ? (
                   <>
-                    <img src={`http://localhost:5000/pembayaran/${order.buktiPembayaran}`} alt="Bukti Pembayaran" className="img-fluid rounded shadow-sm mb-3" style={{ maxHeight: '300px' }} />
-                    <p>
-                      <strong>Nama Bank:</strong> {order.namaBank || '-'}
-                    </p>
-                    <p>
-                      <strong>No. Rekening:</strong> {order.noRekening || '-'}
-                    </p>
+                    <img src={`http://localhost:5000/pembayaran/${modalContent.image}`} alt="Bukti" className="img-fluid rounded shadow-sm mb-3" style={{ maxHeight: '300px' }} />
+                    {modalContent.type === 'TRANSFER' && (
+                      <>
+                        <p>
+                          <strong>Nama Bank:</strong> {modalContent.namaBank || '-'}
+                        </p>
+                        <p>
+                          <strong>No. Rekening:</strong> {modalContent.noRekening || '-'}
+                        </p>
+                      </>
+                    )}
                   </>
                 ) : (
-                  <p>Tidak ada bukti pembayaran yang diunggah.</p>
+                  <p>Tidak ada bukti yang diunggah.</p>
                 )}
               </div>
               <div className="modal-footer">
