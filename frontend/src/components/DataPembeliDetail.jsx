@@ -47,27 +47,27 @@ export default function DataPembeliDetail() {
 
   return (
     <div
-      className="p-4 w-100"
+      className="container-fluid py-4"
       style={{
         background: 'linear-gradient(to bottom right, #fff0f6, #ffffff)',
         minHeight: '100vh',
       }}
     >
-      <div className="flex-grow-1 p-4" style={{ backgroundColor: '#f8f9fa', minHeight: '100vh' }}>
+      <div className="p-3" style={{ backgroundColor: '#f8f9fa', minHeight: '100vh' }}>
         <button className="btn btn-outline-dark mb-3" onClick={() => navigate(-1)}>
           ← Kembali
         </button>
 
-        <div className="card shadow-sm p-4">
+        <div className="card shadow-sm p-3 p-md-4">
           <h3 className="fw-bold text-center mb-4">Detail Pembelian</h3>
           <hr />
 
-          {/* === Baris 1: Data Pembeli === */}
-          <div className="row mb-4">
-            <div className="col-md-3 text-center">
-              <img src={`http://localhost:5000/users/${order.User?.foto || 'default.jpg'}`} alt="Foto Pembeli" className="rounded-circle mb-3 shadow-sm" width="140" height="140" style={{ objectFit: 'cover' }} />
+          {/* === Data Pembeli === */}
+          <div className="row align-items-center mb-4">
+            <div className="col-12 col-md-3 text-center mb-3 mb-md-0">
+              <img src={`http://localhost:5000/users/${order.User?.foto || 'default.jpg'}`} alt="Foto Pembeli" className="rounded-circle shadow-sm" width="140" height="140" style={{ objectFit: 'cover' }} />
             </div>
-            <div className="col-md-9">
+            <div className="col-12 col-md-9 text-center text-md-start">
               <h5 className="fw-bold mb-1">{order.User?.nama || '-'}</h5>
               <p className="mb-0">
                 <strong>Alamat:</strong> {order.address || '-'}
@@ -77,12 +77,12 @@ export default function DataPembeliDetail() {
 
           <hr />
 
-          {/* === Baris 2: Data Produk === */}
+          {/* === Data Produk === */}
           <div className="row align-items-center mb-4">
-            <div className="col-md-3 text-center">
-              <img src={`http://localhost:5000/Products/${order.Product?.photo || 'no-image.jpg'}`} alt="Foto Produk" className="rounded shadow-sm" width="150" height="150" style={{ objectFit: 'cover' }} />
+            <div className="col-12 col-md-3 text-center mb-3 mb-md-0">
+              <img src={`http://localhost:5000/Products/${order.Product?.photo || 'no-image.jpg'}`} alt="Foto Produk" className="rounded shadow-sm img-fluid" style={{ maxWidth: '180px', height: 'auto', objectFit: 'cover' }} />
             </div>
-            <div className="col-md-9">
+            <div className="col-12 col-md-9 text-center text-md-start">
               <h5 className="fw-bold">{order.Product?.name || '-'}</h5>
               <p className="mb-1">
                 <strong>Jumlah:</strong> {order.quantity}
@@ -95,9 +95,9 @@ export default function DataPembeliDetail() {
 
           <hr />
 
-          {/* === Baris 3: Rincian Pembelian === */}
+          {/* === Rincian Pembelian === */}
           <div className="row">
-            <div className="col-md-6">
+            <div className="col-12 col-md-6 mb-3">
               <ul className="list-group list-group-flush">
                 <li className="list-group-item">
                   <strong>Ongkir:</strong> Rp {order.Shipping?.cost?.toLocaleString() || '0'}
@@ -115,7 +115,7 @@ export default function DataPembeliDetail() {
               </ul>
             </div>
 
-            <div className="col-md-6">
+            <div className="col-12 col-md-6">
               <ul className="list-group list-group-flush">
                 <li className="list-group-item">
                   <strong>Total Harga:</strong> Rp {order.totalPrice?.toLocaleString() || '0'}

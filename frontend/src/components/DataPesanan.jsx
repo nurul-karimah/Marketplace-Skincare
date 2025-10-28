@@ -32,7 +32,13 @@ export default function DataPenjualan() {
   };
 
   return (
-    <div className="container-fluid py-4" style={{ backgroundColor: '#f9f9f9', minHeight: '100vh' }}>
+    <div
+      className="p-4 w-100"
+      style={{
+        background: 'linear-gradient(to bottom right, #fff0f6, #ffffff)',
+        minHeight: '100vh',
+      }}
+    >
       <h2 className="text-center fw-bold mb-4">📊 Data Penjualan</h2>
 
       {/* === Ringkasan Penjualan === */}
